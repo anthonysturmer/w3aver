@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Lorem Ipsum Dolorr",
+    "src": "https://anthonysturmer.github.io/anthonysturmer/5.png",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
+  {
+    "title": "Consectetur Adipiscing",
+    "src": "https://anthonysturmer.github.io/anthonysturmer/4.png",
+    "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  },
+  {
+    "title": "Tempor Incididunt",
+    "src": "https://anthonysturmer.github.io/anthonysturmer/4.png",
+    "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  }
+]

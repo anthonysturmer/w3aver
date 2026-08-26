@@ -1,0 +1,37 @@
+{
+  "profile": {
+    "favicon": "https://anthonysturmer.github.io/anthonysturmer/1.jpg",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "tags": [
+      "Games",
+      "Movies",
+      "TV Shows",
+      "Anime",
+      "Manga",
+      "Comics",
+      "Music",
+      "K-Pop",
+      "Board Games",
+      "RPG",
+      "Streaming"
+    ]
+  },
+  "posts": [
+    {
+      "id": "1",
+      "favicon": "https://anthonysturmer.github.io/anthonysturmer/1.jpg",
+      "autor": "doritos.com",
+      "title": "Título teste para W3aver",
+      "img": "https://anthonysturmer.github.io/anthonysturmer/img.jpg",
+      "data": "2y ago"
+    },
+    {
+      "id": "2",
+      "favicon": "https://anthonysturmer.github.io/anthonysturmer/1.jpg",
+      "autor": "doritos.com",
+      "title": "teste título teste titulo teste titulo",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "data": "1d ago"
+    }
+  ]
+}
