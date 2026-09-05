@@ -2,18 +2,7 @@
 
   import { onMount } from "svelte";
   import Post from "./post.svelte";
-
-  interface post_data {
-    id: string;
-    favicon: string;
-    autor: string;
-    title: string;
-    img?: string;
-    text?: string;
-    data: string;
-    
-  }
-
+  import { type post_data } from "../global/bookmarks.svelte";
   
   interface feed_props {
     style?: string;
@@ -38,12 +27,12 @@
 
 
 
-<section id="feed" class="feed" {style}>
-  {#each posts as post, index (post.id ?? index)}
+<section class="main-feed" {style}>
+  {#each posts as post, index (index)}
     <Post
       post={post}
       is_last={index === posts.length - 1}
-      on_profile_click={() => on_profile_click(post.autor)}
+      on_profile_click={() => on_profile_click(post[0])}
     />
   {/each}
 </section>
@@ -51,7 +40,7 @@
 
 <style>
 
-  .feed {
+  .main-feed {
 
     width: 580px;
     margin-top: 11px;

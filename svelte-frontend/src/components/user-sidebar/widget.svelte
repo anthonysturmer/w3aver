@@ -92,7 +92,7 @@ import { onMount } from "svelte";
     <p id="widget-title" class="widget__ad-title">
         {current_ad.title}
     </p>
-    <img id="widget-img" class="widget__ad-img" src={current_ad.src} />
+    <img loading="lazy" id="widget-img" class="widget__ad-img" src={current_ad.src} />
     <p id="widget-text" class="widget__ad-text">
         {current_ad.text}
     </p>

@@ -56,7 +56,7 @@
               src="https://anthonysturmer.github.io/anthonysturmer/1.jpg"
               class="post__favicon"
             />
-            <a>doritos.com</a>
+            <a>userexample.com</a>
           </div>
           <button class="post__subscribe">subscribe</button>
         </div>
@@ -91,7 +91,7 @@
               src="https://anthonysturmer.github.io/anthonysturmer/1.jpg"
               class="post__favicon"
             />
-            <a>doritos.com</a>
+            <a>userexample.com</a>
           </div>
           <button class="post__subscribe">subscribe</button>
         </div>

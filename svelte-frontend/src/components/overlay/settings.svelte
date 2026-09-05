@@ -56,8 +56,8 @@
 
       {#each hidden_state.items as author_name}
 
-        <div class="settings__button">
-          <button>{author_name}</button> <button onclick={() => show_profile(author_name)}>x</button>
+        <div class="settings__div">
+          <p>{author_name}</p> <button onclick={() => show_profile(author_name)}>x</button>
         </div>
       {:else}
 
@@ -129,6 +129,26 @@
     align-items: center;
   }
 
+    .settings__div {
+    height: 54px;
+    border: 0;
+    background-color: transparent;
+    color: white;
+    text-align: start;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .settings__div:hover {
+    background-color: #1e1e26;
+  }
+
   .settings__button:hover {
     background-color: #1e1e26;
   }
@@ -162,7 +182,7 @@
     flex-direction: column;
   }
 
-  .settings__block-list > div > button {
+  .settings__block-list > div > p, .settings__block-list > div > button {
     width: fit-content;
     height: fit-content;
     color: #979797;

@@ -1,11 +1,14 @@
-export interface post_data {
-  favicon: string;
-  autor: string;
-  title: string;
-  img?: string;
-  text?: string;
-  data: string;
-}
+export type post_data = [
+  a: string,
+  f: string,
+  t: string,
+  i: string | null,
+  d: string | null,
+  t1: string | null,
+  t2: string | null,
+  t3: string | null,
+  c: string,
+];
 
 const saved =
   typeof window !== "undefined"
@@ -18,7 +21,7 @@ export const bookmarks_state = $state<{ items: post_data[] }>({
 
 export function is_bookmarked(post: post_data) {
   return bookmarks_state.items.some(
-    (item) => item.title === post.title && item.autor === post.autor,
+    (item) => item[2] === post[2] && item[1] === post[1],
   );
 }
 
@@ -27,7 +30,7 @@ export function toggle_bookmarks(post: post_data) {
 
   if (exists) {
     bookmarks_state.items = bookmarks_state.items.filter(
-      (item: any) => !(item.title === post.title && item.autor === post.autor),
+      (item) => !(item[2] === post[2] && item[1] === post[1]),
     );
   } else {
     bookmarks_state.items.push(post);

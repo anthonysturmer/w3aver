@@ -12,3 +12,7 @@ body {
   justify-content: center;
   overflow-x: hidden;
 }
+
+button {
+  cursor: pointer;
+}

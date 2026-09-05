@@ -1,38 +1,26 @@
 <script lang="ts">
    import Widget from "./widget.svelte";
+   import ProfileBox from "./profile-box.svelte";
+    import { user } from "../global/auth.svelte";
 
     interface user_sidebar_props {
         on_open_overlay: (overlay_name: string) => void;
     }
     
     let { on_open_overlay }: user_sidebar_props = $props()
+    
 
 </script>
 
 
 <div class="user-sidebar">
-    <section class="user-sidebar__profile">
-    <div></div>
 
-    <div class="user-sidebar__profile-img-div">
-        <img
-        class="user-sidebar__profile-img"
-        src="https://anthonysturmer.github.io/anthonysturmer/1.jpg"
-        />
-    </div>
-
-    <p>cebolitos.com.br</p>
-
-    <button class="user-sidebar__exit-button" id="exit-button">
-        Exit
-    </button>
-
-    <div></div>
-    </section>
+    <ProfileBox/>
 
     <div>
+    {#if user.is_logged_in}
     <button
-        onclick={() => on_open_overlay("Create_post")}
+        onclick={() => on_open_overlay("CreatePost")}
         id="create-post-button"
         class="user-sidebar__button"
     >
@@ -53,6 +41,7 @@
         </svg>
         <p class="user-sidebar__button-p">Create post</p>
     </button>
+    {/if}
     <button
         onclick={() => on_open_overlay("Bookmarks")}
         id="bookmarks-button"
@@ -74,7 +63,7 @@
     </button>
     <button
         id="local-data-button"
-        onclick={() => on_open_overlay("Local_data")}
+        onclick={() => on_open_overlay("LocalData")}
         class="user-sidebar__button" 
     >
         <svg
@@ -130,50 +119,6 @@
   gap: 8px;
   box-sizing: border-box;
 }
-  .user-sidebar__profile {
-    width: 100%;
-    box-sizing: border-box;
-    height: 68px;
-    /*border: 1px solid rgba(255, 255, 255, 0.208); */
-    padding-left: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    position: relative;
-    background-color: #181820;
-    border-radius: 10px;
-  }
-
-  .user-sidebar__profile-img-div {
-    border-radius: 50%;
-    overflow: hidden;
-    min-width: 38px !important;
-    height: 38px;
-    border: 1px solid rgba(255, 255, 255, 0.201);
-  }
-
-  .user-sidebar__profile-img {
-    min-width: 38px !important;
-    height: 38px;
-    border-radius: 50%;
-  }
-
-  .user-sidebar__exit-button {
-    background-color: #2b2b38;
-    border-radius: 14px;
-    padding: 14px;
-    padding-bottom: 3px;
-    padding-top: 3px;
-    color: rgb(255, 255, 255);
-    border: 0px;
-  }
-  .user-sidebar__exit-button:hover {
-    background-color: rgb(210, 9, 53);
-  }
-
   .user-sidebar__button {
     height: 52px;
     width: 100%;
