@@ -6,9 +6,9 @@ W3aver is a lightweight web platform where content creators can share links to t
 
 ## Screenshots:
 
-![Print](screenshots/1.png)
+![Print](screenshots/3.png)
 
 ![Print](screenshots/2.png)
 
-![Print](screenshots/3.png)
+![Print](screenshots/1.png)
 
