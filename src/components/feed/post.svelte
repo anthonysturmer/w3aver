@@ -133,11 +133,11 @@
     height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 10px;
     border-top: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.208);
     box-sizing: border-box;
+    min-height: 200px;
 
     &--last {
       border-bottom: 0;
@@ -221,6 +221,7 @@
       font-weight: 500;
       line-height: 1.3em;
       letter-spacing: 0.02em;
+      flex: 1;
     }
 
     &__img {
