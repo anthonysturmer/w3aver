@@ -30,7 +30,7 @@
       ></button
     >
   {:else}
-    <button class="profile-box_become-creator-button" onclick={() => log_in()}
+    <button class="profile-box__become-creator-button" onclick={() => log_in()}
       >Become a Creator</button
     >
   {/if}
@@ -108,7 +108,7 @@
       font-size: 14px;
     }
 
-    &__reator-button:hover {
+    &__become-creator-button:hover {
       background-color: rgb(30, 70, 164);
       outline: 0px;
     }

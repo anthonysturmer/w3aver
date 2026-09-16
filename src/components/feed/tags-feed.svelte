@@ -107,6 +107,11 @@
     position: fixed;
 
     z-index: 103;
+        & h2 {
+       font-size: 0.95rem;
+       font-weight: 500;
+       color: rgb(145, 145, 145);
+    }
   }
 
     .profile-top-background {

@@ -5,20 +5,20 @@
 
 </script>    
     
-    <section id="settings" class="settings">
+    <section class="settings">
       <h1 class="settings__title">Settings</h1>
       <h2>Basic</h2>
       <section class="settings__section">
-        <div class="settings__button" id="dark-mode-div">
+        <div class="settings__button">
           Modo escuro <input type="radio" name="modo" />
         </div>
-        <div class="settings__button" id="light-mode-div">
+        <div class="settings__button">
           Modo claro <input type="radio" name="modo" />
         </div>
-        <div class="settings__button" id="font-size-div">
+        <div class="settings__button">
           Font size <input class="settings__number-input" type="number" />
         </div>
-        <div class="settings__button" id="language-div">
+        <div class="settings__button">
           Language
           <select class="settings__select">
             <option>english</option>
@@ -27,12 +27,7 @@
           </select>
         </div>
 
-        <button
-          class="settings__button settings__save-button"
-          type="submit"
-        >
-          Save Changes
-        </button>
+  
       </section>
 
       <h2>Account</h2>
@@ -161,20 +156,6 @@
     padding-left: 7px;
     background-color: transparent;
     color: white;
-  }
-
-  .settings__save-button {
-    background-color: rgba(250, 250, 250, 0.035) !important;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.208) !important;
-    margin-top: 20px;
-    height: 66px;
-    width: 96%;
-    box-sizing: border-box;
-  }
-
-  .settings__save-button:hover {
-    scale: 1.01;
   }
 
   .settings__block-list {

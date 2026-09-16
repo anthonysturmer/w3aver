@@ -81,7 +81,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
       >
         <path d="m15 18-6-6 6-6" />
         </svg>
-        <h2 style="font-size: 16px;">userexample.com</h2>
+        <h2>userexample.com</h2>
 </button>
 
 <div class="profile-top-background" id="profile-top-background"></div>
@@ -162,12 +162,15 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
     padding-left: 10px;
     padding-right: 14px;
     border: 1px solid rgba(255, 255, 255, 0.208);
-    color: white;
-    font-size: 1rem;
     cursor: pointer;
     position: fixed;
     z-index: 103;
 
+    & h2 {
+       font-size: 0.95rem;
+       font-weight: 500;
+       color: rgb(145, 145, 145);
+    }
     &:hover {
       background-color: #181820;
     }

@@ -265,11 +265,7 @@
       border-radius: 4px;
       color: rgba(255, 255, 255, 0.825);
       outline: 1px solid rgba(255, 255, 255, 0.16);
-
-      &:hover {
-        background-color: rgba(252, 252, 252, 0.122);
-        color: rgba(255, 255, 255, 0.932);
-      }
+      cursor: default;
     }
 
     &__bookmark-button {
