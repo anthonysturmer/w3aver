@@ -1,8 +1,8 @@
 <script lang="ts">
 
-  import { hidden_state } from "../global/hidden.svelte";
-  import { subscriptions_state } from "../global/subscriptions.svelte";
-  import { bookmarks_state } from "../global/bookmarks.svelte";
+  import { hidden_state } from "../../global/hidden.svelte";
+  import { subscriptions_state } from "../../global/subscriptions.svelte";
+  import { bookmarks_state } from "../../global/bookmarks.svelte";
 
   let json = $state(
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 
 
-   import { hidden_state, show_profile } from "../global/hidden.svelte";
+   import { hidden_state, show_profile } from "../../global/hidden.svelte";
 
 </script>    
     

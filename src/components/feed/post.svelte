@@ -2,13 +2,21 @@
   import {
     is_subscribed,
     toggle_subscriptions,
-  } from "../global/subscriptions.svelte";
+    
+  } from "../../global/subscriptions.svelte";
+
+  import { bookmarks_colors_state } from "../../global/bookmarks_colors.svelte";
+  import { iframe_url } from "../../global/iframe.svelte";
+
+
+
   import {
     is_bookmarked,
     toggle_bookmarks,
     type post_data,
-  } from "../global/bookmarks.svelte";
-  import { is_hidden, hide_profile } from "../global/hidden.svelte";
+    get_bookmark_color,
+  } from "../../global/bookmarks.svelte";
+  import { is_hidden, hide_profile } from "../../global/hidden.svelte";
 
   interface post_props {
     post: any;
@@ -17,26 +25,75 @@
     is_last: boolean;
   }
 
+$effect(() => {
+  function handle_click(event: MouseEvent) {
+    const target = event.target;
+
+    if (!(target instanceof Element)) return;
+
+    if (
+      !target.closest(".post__bookmarks_options_div") &&
+      !target.closest(".post__bookmark-button")
+    ) {
+      bookmarks_options = false;
+    }
+  }
+
+  document.addEventListener("click", handle_click);
+
+  return () => {
+    document.removeEventListener("click", handle_click);
+  };
+});
+  
+
   let {
+    post_link,
     post,
     favicon,
     on_profile_click,
     is_last = false,
   }: post_props = $props();
 
+
+
+  let bottom_space: HTMLElement;
+  let bookmarks_options_div: HTMLElement; 
+
+  function compare_widths() {
+    const available_width = bottom_space.getBoundingClientRect().width;
+    const bookmarks_width = bookmarks_options_div.scrollWidth;
+
+    if (bookmarks_width <= available_width) {
+      bookmarks_options_div.style.width = "fit-content";
+    } else {
+      bookmarks_options_div.style.width = "calc(100% - 28px)";
+    }
+  }
+
+
+  let bookmarks_options = $state(false);
+  let bookmark_color = $derived(get_bookmark_color(post));
   let subscribed = $derived(is_subscribed(post[0]));
   let bookmarked = $derived(is_bookmarked(post));
   let hidden = $derived(is_hidden(post[0]));
+
+  let dominium = new URL(post[0]).hostname
+  
 </script>
 
 <article
+
+  onclick={() => iframe_url.url = post[0]}
+
+
   class="post {is_last ? 'post--last' : ''}"
   style:display={hidden ? "none" : undefined}
 >
   <div class="post__profile">
     <button class="post__profile-left" onclick={on_profile_click}>
       <img loading="lazy" src={post[1]} class="post__favicon" alt="favicon" />
-      <p class="post__profile-name">{post[0]}</p>
+      <p class="post__profile-name">{dominium }</p>
     </button>
 
     <div class="post__profile-right">
@@ -65,8 +122,6 @@
           <svg
             class="post__subscribe-svg"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -94,6 +149,8 @@
   {/if}
 
   <div class="post__bottom">
+
+
     <time class="post__data">{post[6]}</time>
 
     <div class="post__tag-div">
@@ -102,10 +159,53 @@
       {/each}
     </div>
 
+    <div bind:this={bottom_space} class="post__bottom-space"></div>
+
+<div
+  class="post__bookmarks_options_div"
+  class:open={bookmarks_options}
+  bind:this={bookmarks_options_div}
+>
+{#each bookmarks_colors_state.items as bookmark_color_option, index}
+  <svg
+    class="post__bookmark-svg"
+    style={`--delay: ${index * 20}ms`}
+    onclick={() => {
+      toggle_bookmarks(post, bookmark_color_option.id);
+    }}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill={
+      bookmark_color === bookmark_color_option.color
+        ? bookmark_color_option.color
+        : "none"
+    }
+    stroke={bookmark_color_option.color}
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+  <path
+    d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a1 1 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+  ></path>
+  </svg>
+{/each}
+</div>
+
     <button
+
+      onclick={() => {
+      
+      bookmarks_options = !bookmarks_options;
+
+        requestAnimationFrame(() => {
+          compare_widths();
+        });
+    }}
+
       class="post__bookmark-button"
-      class:active={bookmarked}
-      onclick={() => toggle_bookmarks(post)}
+      class:active={bookmarked && !bookmarks_options}
+      style:opacity={bookmarks_options ? "0.4" : undefined}
       aria-label={bookmarked ? "remove from bookmarked" : "bookmark post"}
     >
       <svg
@@ -126,6 +226,22 @@
   </div>
 </article>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style lang="scss">
   .post {
     width: 100%;
@@ -133,7 +249,7 @@
     height: fit-content;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 16px;
     border-top: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.208);
     box-sizing: border-box;
@@ -149,7 +265,7 @@
       padding: 5px;
       box-sizing: border-box;
       width: 100%;
-      height: 44px;
+      height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -178,11 +294,11 @@
     }
 
     &__favicon {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background-color: rgb(119, 127, 135);
-      border: 1px solid rgba(255, 255, 255, 0.201);
+
     }
 
     &__subscribe {
@@ -204,6 +320,7 @@
 
     &__title {
       width: 100%;
+      margin-top: 5px;
       margin-bottom: 5px;
       height: fit-content;
       max-height: 80px;
@@ -228,10 +345,13 @@
       width: 100%;
       border: 1px solid rgba(255, 255, 255, 0.253);
       aspect-ratio: 16 / 12;
+      object-fit: cover; 
+      object-position: center;
     }
 
     &__bottom {
       width: 100%;
+      position: relative;
       background-color: rgba(102, 20, 157, 0);
       color: rgba(255, 255, 255, 0.484);
       height: fit-content;
@@ -239,7 +359,7 @@
       align-items: center;
       justify-content: space-between;
       padding-bottom: 2px;
-      padding-top: 2px;
+      padding-top: 10px;
       font-size: 0.9rem;
     }
 
@@ -251,10 +371,11 @@
     }
 
     &__tag-div {
+      
       display: flex;
       flex-direction: row;
       gap: 12px;
-      flex: 1;
+      
       margin-left: 18px;
     }
 
@@ -268,7 +389,66 @@
       cursor: default;
     }
 
+    &__bottom-space {
+      background-color: aqua;
+      min-width: 0;
+      flex: 1;
+    }
+
+&__bookmarks_options_div {
+  
+  position: absolute;
+  right: 28px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: fit-content;
+  background-color: #0f0f15;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+
+
+  .post__bookmark-svg {
+    opacity: 0;
+    transform: translateX(20px) scale(0.7);
+    cursor: pointer;
+
+      transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        
+    }
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+
+    .post__bookmark-svg {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      transition-delay: var(--delay);
+      
+    }
+  }
+
+
+
+.post__bookmark-svg:hover {
+  transition-delay: 0ms;
+  transform: scale(1.1);
+}
+}
+
+    
+
     &__bookmark-button {
+
+      
       width: 30px;
       height: 30px;
       border-radius: 50%;
@@ -280,6 +460,7 @@
       border: 0;
       margin-right: -8px;
       cursor: pointer;
+      transition: transform 0.15s ease;
 
       &.active path {
         fill: rgb(255, 255, 255);
@@ -289,16 +470,14 @@
       &:hover {
         transform: scale(
           1.1
-        ); // Sintaxe CSS moderna substituindo 'scale' direto
+        ); 
       }
     }
 
     &__bookmark-svg {
-      color: #ffffff;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       stroke-width: 1.4px;
-      stroke: currentColor;
       stroke-linejoin: round;
       stroke-linecap: round;
     }
@@ -320,5 +499,10 @@
         }
       }
     }
+
+  .post__subscribe-svg path{
+    color: rgba(255, 255, 255, 0.208);
+}
   }
+
 </style>

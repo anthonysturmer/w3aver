@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { user, log_in, log_out } from "../global/auth.svelte";
+  import { user, log_in, log_out } from "../../global/auth.svelte";
 
   interface profile_box_props {
     open_create_post: (args: string) => void;

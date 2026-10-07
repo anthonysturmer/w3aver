@@ -148,7 +148,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
 <style lang="scss">
 
 .profile-top {
-    width: 580px;
+    width: 600px;
     top: 10px;
     position-anchor: --profile-archor;
     height: 46px;
@@ -177,7 +177,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
 }
 
 .profile-top-background {
-    width: 588px;
+    width: 608px;
     position: fixed;
     height: 44px;
     margin-left: -4px;
@@ -189,7 +189,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
   }
 
 .profile {
-  width: 580px;
+  width: 600px;
   height: fit-content;
   background-color: rgba(0, 0, 0, 0);
   margin-top: 11px;
@@ -216,7 +216,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
   }
 
   &__description {
-    max-width: 580px;
+    max-width: 600px;
     width: 86%;
     color: #b1b1b1;
     text-align: center;
@@ -252,7 +252,7 @@ let { style, close_profile,  on_profile_click }: feed_props = $props();
 
 
   &__favicon-and-buttons {
-    max-width: 580px;
+    max-width: 600px;
     width: 92%;
     display: flex;
     flex-direction: row;

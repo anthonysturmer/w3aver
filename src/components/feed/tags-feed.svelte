@@ -2,7 +2,7 @@
 
   import { onMount } from "svelte";
   import Post from "./post.svelte";
-  import { type post_data } from "../global/bookmarks.svelte";
+  import { type post_data } from "../../global/bookmarks.svelte";
 
   
   interface feed_props {
@@ -71,7 +71,7 @@
 
   .search-feed {
 
-    width: 580px;
+    width: 600px;
     margin-top: 5px;
     margin-bottom: 11px;
     padding-top: 50px;
@@ -87,7 +87,7 @@
 
     .profile-top {
 
-    width: 580px;
+    width: 600px;
     top: 10px;
     position-anchor: --profile-archor;
     height: 46px;
@@ -115,7 +115,7 @@
   }
 
     .profile-top-background {
-    width: 588px;
+    width: 608px;
     position: fixed;
     height: 44px;
     margin-left: -4px;

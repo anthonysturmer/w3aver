@@ -10,11 +10,14 @@
     import NavSidebar from "./components/nav-sidebar/nav-sidebar.svelte";
     import UserSidebar from "./components/user-sidebar/user-sidebar.svelte";
     import LocalData from "./components/overlay/local-data.svelte";
-    import Bookmarks from "./components/overlay/bookmarks.svelte"
+    import Bookmarks from "./components/overlay/bookmarks/bookmarks.svelte"
     import CreatePost from "./components/overlay/create-post.svelte"
     import Settings from "./components/overlay/settings.svelte"
     import About from "./components/overlay/about.svelte"
     import Profile from "./components/feed/profile.svelte"
+
+    import { iframe_url } from './global/iframe.svelte';
+
 
     const modal_map: Record<string, Component> = {
 
@@ -64,7 +67,26 @@
 
 <div class="app">
 
-    {#if current_feed_view.type === "main"}
+        {#if iframe_url.url}
+
+<section class="iframe-top-bar">
+
+    <button
+    onclick={() => iframe_url.url = ""}
+    >Voltar</button>
+
+</section>
+
+<iframe 
+            src={iframe_url.url} 
+            title="Visualizador" 
+            width="100%" 
+            height="500px"
+></iframe>
+
+
+
+    {:else if current_feed_view.type === "main"}
 
         <MainFeed on_profile_click={(autor) => open_profile(autor)}/>
 
@@ -110,13 +132,15 @@
 
     {/if}
 
+
+
 </div>
 
 
 <style>
 
 #container {
-    width: 1240px;
+    width: 1260px;
     background-color: rgba(0, 0, 0, 0);
     height: 100vh;
     padding: 10px;
@@ -164,7 +188,27 @@
     cursor: pointer;
 }
 .go-back-button {
-    color: rgb(255, 255, 255);
+    outline: 0px;
+    border: 0px;
+}
+
+
+.iframe-top-bar {
+ z-index: 1000000000000000000000;
+ background-color: #0f0f15;
+ position: fixed;
+ top: 0px;
+ left: 0px;
+ width: 100vw;
+ height: 40px;
+}
+iframe {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    z-index: 1000000000000000000;
 }
 
 

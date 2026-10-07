@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { subscriptions_state } from "../global/subscriptions.svelte";
+  import { subscriptions_state } from "../../global/subscriptions.svelte";
   let { is_visible }: { is_visible: boolean } = $props();
 </script>
 

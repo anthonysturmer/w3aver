@@ -6,6 +6,7 @@
   import { fade, slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
 
+  let url_input = $state("");
   let title_input = $state("");
   let image_input = $state("");
   let text_input = $state("");
@@ -29,12 +30,25 @@
   function use_text() {
     image_or_text = "text";
   }
+
+
+let can_publish = $derived(
+  url_input.trim() !== "" &&
+  title_input.trim() !== "" &&
+  (
+    image_or_text === "image"
+      ? image_input.trim() !== ""
+      : text_input.trim() !== ""
+  )
+);
 </script>
 
 <section class="new-post">
   <div class="new-post__inputs-div">
     <h2 class="title">Create a new Post</h2>
     <input
+
+      bind:value={url_input}
       class="new-post__long-input"
       type="url"
       placeholder="Paste your url here"
@@ -46,18 +60,24 @@
       placeholder="Add your title"
     />
 
-    <div class="new-post_ksks">
-      <button
-        onclick={use_image}
-        style:color={image_or_text === "text" ? "gray" : undefined}
-        >Use an image</button
-      >
-      <button
-        onclick={use_text}
-        style:color={image_or_text === "image" ? "gray" : undefined}
-        >Use a text description</button
-      >
-      <div class="move-button" class:active={image_or_text === "text"}></div>
+    <div class="new-post__image-or-description-div">
+    <button
+      onclick={use_image}
+      style:color={image_or_text === "text" ? "gray" : undefined}
+      style:background-color={image_or_text === "image" ? "rgb(30, 70, 164)" : undefined}
+      style:border={image_or_text === "image" ? "1px solid rgb(30, 70, 164)" : undefined}
+    >
+      Use an image
+    </button>
+
+    <button
+      onclick={use_text}
+      style:color={image_or_text === "image" ? "gray" : undefined}
+      style:background-color={image_or_text === "text" ? "rgb(30, 70, 164)" : undefined}
+      style:border={image_or_text === "text" ? "1px solid rgb(30, 70, 164)" : undefined}
+    >
+      Use a text description
+    </button>
     </div>
 
     {#if image_or_text === "image"}
@@ -82,13 +102,32 @@
       <input placeholder="Tag 3" bind:value={tag_3_input} />
     </div>
 
-    <label class="new-post__label new-post__agreement">
-      <input type="checkbox" value="image" /> Lorem ipsum dolor sit amet, consectetur
-      adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-      aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-      ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing
-      elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    </label>
+
+
+
+<!--
+<label class="new-post__agreement">
+  <input type="checkbox" />
+
+  <span>
+    Marque essa opção se seu post aborda um tema que pode gerar ansiedade nos usuários.
+  
+  <button type="button">
+    Saiba se seu post se enquadra aqui
+  </button>
+  </span>
+
+</label>
+-->
+
+
+
+
+    <div class="new-post__publish-div">
+      <button class="new-post__publish-button" 
+      style:background-color={can_publish ? "white" : undefined}
+      >Publish your post</button>
+    </div>
   </div>
 
   <div class="new-post__right">
@@ -146,6 +185,8 @@
             {/if}
           </button>
         </div>
+
+        
       </div>
 
       <h2 class="post__title">{title_input || "Your post title here"}</h2>
@@ -205,124 +246,118 @@
       </div>
     </article>
 
-    <div class="new-post__publish-div">
-      <button class="new-post__publish-button">Publish your post</button>
-    </div>
+
   </div>
 </section>
 
 <style lang="scss">
-  .move-button {
-    position: absolute;
-    left: 6px;
-    width: 48%;
-    height: 80%;
 
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 40px;
-    background-color: rgb(22, 39, 73);
-    z-index: 0;
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background-color: #0f0f15;
+  border: 1px solid rgba(255, 255, 255, 0.279);
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 0 0 auto;
+
+}
+
+.title {
+  font-size: 2rem;
+  padding-bottom: 20px;
+  padding-left: 5px;
+}
+
+.new-post {
+  width: fit-content;
+  height: fit-content;
+  background-color: #0f0f15;
+  display: flex;
+  gap: 48px;
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  padding-bottom: 100px;
+  padding-top: 100px;
+  color: rgb(35, 60, 206);
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
   }
 
-  .move-button.active {
-    left: calc(100% - 48% - 6px);
+  & input:not([type="checkbox"]), & textarea {
+   
+      text-align: start;
+      font-size: 0.9rem;
+      height: 60px;
+      background-color: #13131a;
+      border: 1px solid rgba(255, 255, 255, 0.135);
+      color: white;
+      padding: 14px;
+      border-radius: 24px;
+
+      &:focus {
+        outline: 0px solid rgba(255, 255, 255, 0.208);
+      }
   }
-  .title {
-    font-size: 2rem;
-    padding: 20px;
-    padding-left: 10px;
-  }
-  .new-post__right {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .new-post__left {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  textarea {
-    field-sizing: content;
-    min-height: 56px;
-    background-color: #0f0f15;
-    border: 0px;
-    resize: none;
-    padding: 14px;
-    padding-top: 18px;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  .new-post_ksks {
+
+  &__image-or-description-div {
+
     display: flex;
     flex-direction: row;
     width: 100%;
     background-color: #0f0f15;
-    padding: 6px;
-    border-radius: 40px;
-    gap: 8px;
-    position: relative;
-  }
+    gap: 10px;
 
-  .new-post_ksks > :first-child {
-    background-color: rgba(53, 53, 53, 0.373);
-    background-color: transparent;
-  }
-  .new-post_ksks button {
-    height: 28px;
-    background-color: transparent;
-    border: 0px solid black;
+  button {
+    height: 58px;
     flex: 1;
-    border-radius: 40px;
-    height: 44px;
-    font-size: 1rem;
+    border-radius: 20px;
+    background-color: #13131a;
+    font-size: 0.9rem;
     z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.135);
+  }
   }
 
-  .new-post {
-    width: fit-content;
-
-    height: fit-content;
-    background-color: #0f0f15;
+  &__right {
     display: flex;
+    flex-direction: column;
     gap: 28px;
-    flex-direction: row;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    padding-bottom: 100px;
-    padding-top: 100px;
   }
 
-  .new-post__inputs-div {
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  &__inputs-div {
+
     height: fit-content;
     max-width: 540px;
     border-radius: 4px;
-    background-color: #181820;
-    padding: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
+    gap: 24px;
 
-  @media (max-width: 1200px) {
-    .new-post {
-      flex-direction: column;
-    }
-
-    .new-post__inputs-div {
+    @media (max-width: 1200px) {
       max-width: 580px;
     }
   }
-  .new-post__title {
+
+  &__title {
     font-size: 2rem;
     font-weight: 680;
     width: 100%;
     padding-bottom: 30px;
   }
 
-  .new-post__label {
+  &__label {
     color: #b0b0b0;
     font-weight: 400;
     font-size: 1rem;
@@ -330,7 +365,7 @@
     max-width: 580px;
   }
 
-  .new-post__tags-input-div {
+  &__tags-input-div {
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -339,22 +374,15 @@
     background-color: transparent;
     border-radius: 5px;
     color: white;
-    gap: 8px;
+    gap: 10px;
+
+    input {
+      flex: 1;
+      width: 30%;
+    }
   }
 
-  .new-post__tags-input-div input {
-    flex: 1;
-    text-align: start;
-    font-size: 0.9rem;
-    width: 30%;
-    background-color: #0f0f15;
-    border: 0px solid rgba(255, 255, 255, 0.208);
-    color: white;
-    padding: 14px;
-    border-radius: 4px;
-  }
-
-  .new-post__verify-div {
+  &__verify-div {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -363,7 +391,7 @@
     color: #666666;
   }
 
-  .new-post__verify-button {
+  &__verify-button {
     width: fit-content;
     padding: 14px;
     padding-left: 48px;
@@ -374,16 +402,17 @@
     color: white;
   }
 
-  .new-post__publish-button {
-    width: 180px;
-    height: 48px;
-    background-color: #ffffff;
+  &__publish-button {
+    width: 200px;
+    height: 58px;
+    background-color: transparent;
+    border: 1px solid rgb(95, 95, 95);
     border-radius: 50px;
-    border: 0px solid white;
-    color: black;
+    color: rgb(168, 168, 168);
+    margin-top: 20px;
   }
 
-  .new-post__publish-div {
+  &__publish-div {
     width: 100%;
     display: flex;
     justify-content: end;
@@ -391,15 +420,34 @@
     color: #666666;
   }
 
-  .new-post__agreement {
-    padding: 10px;
-    border-radius: 5px;
-    line-height: 24px;
+/*
+&__agreement {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.208);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background-color: #13131a;
 
-    display: inline-block;
+  button {
+
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #5f8ee8;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
+}*/
 
-  .new-post__article {
+  &__article {
     border: 1px solid rgba(255, 255, 255, 0.208);
     width: 100%;
     gap: 10px;
@@ -412,23 +460,30 @@
     border-radius: 5px;
   }
 
-  .new-post__long-input {
+  &__long-input {
     width: 100%;
-    text-align: start;
-    font-size: 1rem;
-    background-color: #0f0f15;
-    border-radius: 4px;
-    border: 0px solid black;
-    color: white;
-    padding: 14px;
-    height: 56px;
+    
+    &:focus {
+      outline: 0px solid rgba(255, 255, 255, 0.208);
+    }
   }
+}
 
-  .new-post__long-input:focus,
-  .new-post__tags-input-div input:focus,
-  textarea:focus {
+textarea {
+  field-sizing: content;
+  min-height: 60px;
+  background-color: #0f0f15;
+  border: 0px;
+  resize: none;
+  padding: 14px;
+  padding-top: 18px;
+  border-radius: 4px;
+  font-size: 1rem;
+
+  &:focus {
     outline: 0px solid rgba(255, 255, 255, 0.208);
   }
+}
 
   .post {
     width: 580px;

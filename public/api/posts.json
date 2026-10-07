@@ -1,20 +1,40 @@
 [
   [
-    "userexample.com",
-    "https://anthonysturmer.github.io/anthonysturmer/1.jpg",
-    "Lorem ipsum dolor sit amet",
-    "https://anthonysturmer.github.io/anthonysturmer/img.jpg",
+    "https://summer-josu.github.io/exemplo-1/",
+
+    "https://summer-josu.github.io/exemplo-1/favicon.jpeg",
+
+    "Como se proteger durante períodos de El Niño",
+    "https://formad.org.br/wp-content/uploads/2025/05/AgenciaReuters203.jpg",
     null,
-    ["houses", "river", "sky"],
+    ["el-niño", "meio-ambiente", "segurança"],
     "2y ago"
   ],
-  [
-    "userexample.net",
+    [
+    "https://texel-org.github.io/windfoil-paper/",
     "https://anthonysturmer.github.io/anthonysturmer/3.png",
     "Lorem ipsum dolor sit amet, consectetur adipiscing",
     null,
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     ["cats", "campfire", "landscape"],
     "1d ago"
+  ],
+  [
+    "https://vegspring.blogspot.com/2025/10/receita-de-bolo-de-chocolate-vegano-2.html",
+    "https://i.pinimg.com/736x/04/9c/44/049c440f8e6c22f25925a403e8bdc4e2.jpg",
+    "Receita de bolo de chocolate fofinho, sem ovos e sem leite!",
+    "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-DAgRVeinfo6kd4y1LlFvXbLpJHsF6_raihkmedzkERhkcgPhej2N3V29SuEl_dQLIaHPfIDHheSNSPPxBYPlW__uHSL_fNt91BZyH5ugOOttaFweGksEqqquS2Wo7bX3U1ebnmPViXEJej1Qvq0kk5BMyhLJTlO9PnNe7qEeAGNzS2xhl7Re7QHri7Y/w656-h575/cake.png",
+    null,
+    ["bolo-chocolate", "easy-recipe", "vegano"],
+    "1d ago"
+  ],
+  [
+    "https://cienciahooje.blogspot.com/2026/10/nobel-de-medicina-2026-como-luz-passou.html",
+    "https://i.pinimg.com/736x/13/b6/d8/13b6d8d63a0926cd8cc37fa49a06e8d8.jpg",
+    "Nobel de Medicina 2026: como a luz passou a controlar neurônios e transformou a neurociência",
+    null,
+    "O Prêmio Nobel de Fisiologia ou Medicina de 2026 reconheceu três cientistas pelo desenvolvimento da optogenética, uma técnica que utiliza a luz para controlar a atividade de neurônios. Neste artigo, conheça a história dessa descoberta, que começou com o estudo de uma pequena alga e hoje é uma das principais ferramentas para investigar o funcionamento do cérebro e suas doenças.",
+    ["houses", "river", "sky"],
+    "2y ago"
   ]
 ]

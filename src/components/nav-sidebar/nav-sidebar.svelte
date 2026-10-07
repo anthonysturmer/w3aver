@@ -146,18 +146,18 @@
       align-items: center;
     }
 
-    &__header {
-      width: 96%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
+  &__header {
+    width: 96%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 
     &__title {
       font-size: 2rem;
       text-align: start;
-      width: 110px;
+      width: 120px;
       padding-left: 10px;
       padding-top: 10px;
       padding-bottom: 14px;

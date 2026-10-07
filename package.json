@@ -17,6 +17,7 @@
     "prettier-plugin-svelte": "^4.1.1",
     "sass": "^1.104.0",
     "svelte": "^5.56.8",
+    "svelte-awesome-color-picker": "^4.1.0",
     "svelte-check": "^4.7.3",
     "typescript": "~6.0.2",
     "vite": "^8.2.0"

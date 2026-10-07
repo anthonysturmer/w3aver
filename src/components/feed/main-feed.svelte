@@ -2,7 +2,7 @@
 
   import { onMount } from "svelte";
   import Post from "./post.svelte";
-  import { type post_data } from "../global/bookmarks.svelte";
+  import { type post_data } from "../../global/bookmarks.svelte";
   
   interface feed_props {
     style?: string;
@@ -42,7 +42,7 @@
 
   .main-feed {
 
-    width: 580px;
+    width: 600px;
     margin-top: 11px;
     margin-bottom: 11px;
     display: flex;
