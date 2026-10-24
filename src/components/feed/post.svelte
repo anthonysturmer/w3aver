@@ -71,22 +71,29 @@ $effect(() => {
     }
   }
 
-
+  let dominium = new URL(post[0]).hostname
   let bookmarks_options = $state(false);
   let bookmark_color = $derived(get_bookmark_color(post));
-  let subscribed = $derived(is_subscribed(post[0]));
+  let subscribed = $derived(is_subscribed(dominium));
   let bookmarked = $derived(is_bookmarked(post));
   let hidden = $derived(is_hidden(post[0]));
 
-  let dominium = new URL(post[0]).hostname
+  
   
 </script>
 
 <article
+  onclick={(event) => {
+    const target = event.target;
 
-  onclick={() => iframe_url.url = post[0]}
+    if (!(target instanceof Element)) return;
 
+    if (target.closest("button, a, input, .post__bookmarks_options_div")) {
+      return;
+    }
 
+    iframe_url.url = post[0];
+  }}
   class="post {is_last ? 'post--last' : ''}"
   style:display={hidden ? "none" : undefined}
 >
@@ -132,7 +139,7 @@ $effect(() => {
             <path d="M20 6 9 17l-5-5"></path>
           </svg>
         {:else}
-          subscribe
+          inscrever-se
         {/if}
       </button>
     </div>

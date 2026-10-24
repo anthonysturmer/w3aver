@@ -57,7 +57,7 @@
 </script>
 
 <section class="bookmarks">
-  <h1 class="bookmarks__title">Bookmarks</h1>
+  <h1 class="bookmarks__title">Posts salvos</h1>
 
 <div class="bookmarks__options_row">
   <div class="bookmarks__buttons_row">
@@ -94,14 +94,14 @@
   class="bookmarks__bookmarks-edit-button"
   onclick={() => bookmark_editor_mode = "create"}
 >
-  create
+  criar
 </button>
 
 <button
   class="bookmarks__bookmarks-edit-button"
   onclick={() => bookmark_editor_mode = "edit"}
 >
-  edit
+  editar
 </button>
 
 </div>

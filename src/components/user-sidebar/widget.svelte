@@ -89,10 +89,10 @@ import { onMount } from "svelte";
     {#if current_ad}
 
     <div class="widget__ad">
-    <p id="widget-title" class="widget__ad-title">
+    <p  class="widget__ad-title">
         {current_ad.title}
     </p>
-    <img loading="lazy" id="widget-img" class="widget__ad-img" src={current_ad.src} />
+    <img loading="lazy" class="widget__ad-img" src={current_ad.src} />
     <p id="widget-text" class="widget__ad-text">
         {current_ad.text}
     </p>
@@ -100,7 +100,7 @@ import { onMount } from "svelte";
 
     <div class="widget__index">
     <button
-        id="widget-left-buttom"
+    
         class="widget__left-arrow"
         onclick={handle_left_click}
     >
@@ -187,6 +187,7 @@ import { onMount } from "svelte";
     width: 200px;
     text-align: center;
     line-height: 1.65em;
+    color: rgba(255, 255, 255, 0.939);
   }
 
   .widget__ad-img {

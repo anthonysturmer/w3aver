@@ -7,7 +7,7 @@
   {#each subscriptions_state.items as author_name}
     <button type="button">{author_name}</button>
   {:else}
-    <p>Nenhuma inscrição ainda.</p>
+    <p>Nenhuma inscrição adicionada.</p>
   {/each}
 </div>
 
@@ -22,6 +22,11 @@
     padding: 10px;
     box-sizing: border-box;
     position: relative;
+
+    & p {
+      color: rgba(184, 184, 184, 0.739);
+
+    }
 
     & button {
       background-color: transparent;

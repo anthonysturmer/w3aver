@@ -10,7 +10,7 @@
 </script>
 
 <div class="user-sidebar">
-  <ProfileBox open_create_post={() => on_open_overlay("CreatePost")} />
+  <ProfileBox open_create_post={() => on_open_overlay("CreatePost")} open_plans_options={() => on_open_overlay("PlansOptions")}/>
 
   <div>
     <button
@@ -32,7 +32,7 @@
           d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
         ></path>
       </svg>
-      <p class="user-sidebar__button-p">Bookmarks</p>
+      <p class="user-sidebar__button-p">Posts salvos</p>
     </button>
     <button
       id="local-data-button"
@@ -55,7 +55,7 @@
           d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"
         ></path>
       </svg>
-      <p class="user-sidebar__button-p">Local data</p>
+      <p class="user-sidebar__button-p">Dados locais</p>
     </button>
 
     <button
@@ -80,7 +80,7 @@
         <circle cx="17" cy="17" r="3"></circle>
         <circle cx="7" cy="7" r="3"></circle>
       </svg>
-      <p class="user-sidebar__button-p">Settings</p>
+      <p class="user-sidebar__button-p">Configurações</p>
     </button>
   </div>
   <Widget />

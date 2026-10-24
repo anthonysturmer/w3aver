@@ -10,9 +10,9 @@
 
   let { on_open_overlay, on_tag_selected }: nav_sidebar_props = $props();
 
-  let subscriptions_box_option = $state(true);
+  let subscriptions_box_option = $state(false);
 
-  let explore_box_option = $state(false);
+  let explore_box_option = $state(true);
 
   function handle_subscriptions_click() {
     if (subscriptions_box_option) {
@@ -85,7 +85,7 @@
       ></path>
       <path d="m9 12 2 2 4-4"></path>
     </svg>
-    <p class="nav-sidebar__button-p">Subscriptions</p>
+    <p class="nav-sidebar__button-p">Inscrições</p>
   </button>
 
   <button

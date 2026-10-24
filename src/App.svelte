@@ -6,7 +6,6 @@
     import MainFeed from "./components/feed/main-feed.svelte"
     import TagsFeed from './components/feed/tags-feed.svelte';
     import SearchFeed from './components/feed/search-feed.svelte';
-
     import NavSidebar from "./components/nav-sidebar/nav-sidebar.svelte";
     import UserSidebar from "./components/user-sidebar/user-sidebar.svelte";
     import LocalData from "./components/overlay/local-data.svelte";
@@ -15,6 +14,7 @@
     import Settings from "./components/overlay/settings.svelte"
     import About from "./components/overlay/about.svelte"
     import Profile from "./components/feed/profile.svelte"
+    import PlansOptions from './components/overlay/plans-options.svelte';
 
     import { iframe_url } from './global/iframe.svelte';
 
@@ -24,6 +24,7 @@
         LocalData: LocalData, 
         Bookmarks: Bookmarks,
         CreatePost: CreatePost,
+        PlansOptions: PlansOptions,
         Settings: Settings,
         About: About
     };
@@ -63,26 +64,62 @@
         active_modal = null 
     }
 
+    // PROVISÓRIO :
+
+    import { onMount } from 'svelte';
+    onMount(() => {
+    
+    const ja_visitou = localStorage.getItem('ja_visitou');
+
+    if (!ja_visitou) {
+      
+        alert(
+                'Para a equipe do Sebrae Supernova:\n\n' +
+                'O site aqui disponível busca exemplificar como seria a dinâmica dos posts armazenados localmente. ' +
+                'Esta não é a versão final e ainda não está conectada a um servidor. ' +
+                'Por isso, alguns recursos ainda não estão implementados ou podem funcionar de forma inesperada.\n\n' +
+                'A responsividade para dispositivos móveis ainda está sendo desenvolvida, portanto, utilize um computador para testar o site.'
+        );
+      
+   
+      localStorage.setItem('ja_visitou', 'true');
+    }
+  });
+
 </script>
 
 <div class="app">
 
         {#if iframe_url.url}
+<div class="iframe__container">
 
-<section class="iframe-top-bar">
+    <section class="iframe__top-bar">
+        <img
+            loading="lazy"
+            class="iframe__icon"
+            src="https://anthonysturmer.github.io/anthonysturmer/w3aver.png"
+            alt="w3aver"
+        />
 
-    <button
-    onclick={() => iframe_url.url = ""}
-    >Voltar</button>
+        <button
+            class="iframe__button"
+            onclick={() => iframe_url.url = ""}
+            aria-label="close"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 14 4 9l5-5" />
+            <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" />
+            </svg>
+ 
+        </button>
+    </section>
 
-</section>
+    <iframe
+        src={iframe_url.url}
+        title="Visualizador"
+    ></iframe>
 
-<iframe 
-            src={iframe_url.url} 
-            title="Visualizador" 
-            width="100%" 
-            height="500px"
-></iframe>
+</div>
 
 
 
@@ -139,6 +176,9 @@
 
 <style>
 
+
+
+
 #container {
     width: 1260px;
     background-color: rgba(0, 0, 0, 0);
@@ -184,32 +224,74 @@
     background-color: transparent;
     border: 0px solid black;
     width: 26px;
-    stroke-width: 30px;
     cursor: pointer;
-}
-.go-back-button {
     outline: 0px;
     border: 0px;
 }
 
 
-.iframe-top-bar {
- z-index: 1000000000000000000000;
- background-color: #0f0f15;
- position: fixed;
- top: 0px;
- left: 0px;
- width: 100vw;
- height: 40px;
-}
-iframe {
+
+
+.iframe__container {
+    position: fixed;
+    inset: 0;
     width: 100vw;
     height: 100vh;
-    position: absolute;
-    top: 40px;
-    left: 0px;
-    z-index: 1000000000000000000;
+    z-index: 100000000000000000000000000000000;
+    display: flex;
+    flex-direction: column;
 }
 
+.iframe__top-bar {
+    flex: 0 0 48px;
 
+    width: 100%;
+    height: 48px;
+
+    background-color: #0f0f15;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 8px;
+
+    z-index: 2;
+}
+
+iframe {
+    display: block;
+
+    width: 100%;
+    flex: 1;
+
+    min-height: 0;
+    border: 0;
+
+    z-index: 1;
+}
+
+.iframe__icon {
+    font-size: 2rem;
+    text-align: start;
+    width: 100px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 14px;
+}
+
+.iframe__button  {
+    width: fit-content;
+    height: 30px;
+    border-radius: 8px;
+    background: none;
+    outline: 0px;
+    border: 0px;
+    margin-right: 4px;
+}
+
+.iframe__button svg {
+    width: 26px;
+}
 </style>

@@ -7,29 +7,39 @@ export const hidden_state = $state<{ items: string[] }>({
   items: saved,
 });
 
-export function is_hidden(author_name: string) {
-  return hidden_state.items.includes(author_name);
+function get_hostname(url: string) {
+  return new URL(url).hostname;
 }
 
 function persists() {
-  if (typeof window !== undefined) {
-    localStorage.setItem("hidden", JSON.stringify(hidden_state.items));
+  if (typeof window !== "undefined") {
+    localStorage.setItem(
+      "hidden",
+      JSON.stringify(hidden_state.items),
+    );
   }
 }
 
-export function show_profile(author_name: string) {
-  if (is_hidden(author_name)) {
-    hidden_state.items = hidden_state.items.filter(
-      (name) => name !== author_name,
-    );
+export function is_hidden(url: string) {
+  const hostname = get_hostname(url);
+  return hidden_state.items.includes(hostname);
+}
 
+export function hide_profile(url: string) {
+  const hostname = get_hostname(url);
+
+  if (!is_hidden(url)) {
+    hidden_state.items.push(hostname);
     persists();
   }
 }
 
-export function hide_profile(author_name: string) {
-  if (!is_hidden(author_name)) {
-    hidden_state.items.push(author_name);
+export function show_profile(hostname: string) {
+  if (hidden_state.items.includes(hostname)) {
+    hidden_state.items = hidden_state.items.filter(
+      (name) => name !== hostname,
+    );
+
     persists();
   }
 }

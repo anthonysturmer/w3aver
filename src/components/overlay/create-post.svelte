@@ -45,19 +45,19 @@ let can_publish = $derived(
 
 <section class="new-post">
   <div class="new-post__inputs-div">
-    <h2 class="title">Create a new Post</h2>
+    <h2 class="title">Criar uma nova publicação</h2>
     <input
 
       bind:value={url_input}
       class="new-post__long-input"
       type="url"
-      placeholder="Paste your url here"
+      placeholder="Cole sua URL aqui"
     />
 
     <input
       class="new-post__long-input"
       bind:value={title_input}
-      placeholder="Add your title"
+      placeholder="Adicione o seu título"
     />
 
     <div class="new-post__image-or-description-div">
@@ -67,7 +67,7 @@ let can_publish = $derived(
       style:background-color={image_or_text === "image" ? "rgb(30, 70, 164)" : undefined}
       style:border={image_or_text === "image" ? "1px solid rgb(30, 70, 164)" : undefined}
     >
-      Use an image
+      Usar uma imagem
     </button>
 
     <button
@@ -76,7 +76,7 @@ let can_publish = $derived(
       style:background-color={image_or_text === "text" ? "rgb(30, 70, 164)" : undefined}
       style:border={image_or_text === "text" ? "1px solid rgb(30, 70, 164)" : undefined}
     >
-      Use a text description
+      Usar uma descrição em texto
     </button>
     </div>
 
@@ -84,12 +84,12 @@ let can_publish = $derived(
       <input
         bind:value={image_input}
         class="new-post__long-input"
-        placeholder="Add your image url"
+        placeholder="Adicione a URL da sua imagem"
       />
     {:else}
       <textarea
         bind:value={text_input}
-        placeholder="Add a description for your post"
+        placeholder="Adicione uma descrição para a sua publicação"
         spellcheck="false"
         autocapitalize="none"
         autocomplete="off"
@@ -126,7 +126,7 @@ let can_publish = $derived(
     <div class="new-post__publish-div">
       <button class="new-post__publish-button" 
       style:background-color={can_publish ? "white" : undefined}
-      >Publish your post</button>
+      >Publicar sua postagem</button>
     </div>
   </div>
 
@@ -181,7 +181,7 @@ let can_publish = $derived(
                 <path d="M20 6 9 17l-5-5"></path>
               </svg>
             {:else}
-              subscribe
+              inscrever-se
             {/if}
           </button>
         </div>
@@ -189,7 +189,7 @@ let can_publish = $derived(
         
       </div>
 
-      <h2 class="post__title">{title_input || "Your post title here"}</h2>
+      <h2 class="post__title">{title_input || "Título da sua publicação aqui"}</h2>
 
       {#if image_or_text === "image"}
         <div transition:slide={{ duration: 250, easing: cubicOut }}>
@@ -214,7 +214,7 @@ let can_publish = $derived(
       {/if}
 
       <div class="post__bottom">
-        <time class="post__data">Now</time>
+        <time class="post__data">Agora</time>
 
         <div class="post__tag-div">
           <button class="post__tag-button">{tag_1_input || "tag1"}</button>
@@ -226,7 +226,7 @@ let can_publish = $derived(
           class="post__bookmark-button"
           class:active={bookmarked}
           onclick={toggle_bookmarked}
-          aria-label={bookmarked ? "remove from bookmarked" : "bookmark post"}
+          aria-label={bookmarked ? "remover dos salvos" : "salvar publicação"}
         >
           <svg
             class="post__bookmark-svg"
@@ -493,7 +493,7 @@ textarea {
     border-bottom: 1px solid gray;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 16px;
     border: 1px solid rgba(255, 255, 255, 0.208);
     box-sizing: border-box;
     border-radius: 4px;
@@ -509,7 +509,7 @@ textarea {
       padding: 5px;
       box-sizing: border-box;
       width: 100%;
-      height: 44px;
+      height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -538,8 +538,8 @@ textarea {
     }
 
     &__favicon {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background-color: rgb(119, 127, 135);
       border: 1px solid rgba(255, 255, 255, 0.201);
@@ -588,7 +588,9 @@ textarea {
     &__img {
       width: 100%;
       border: 1px solid rgba(255, 255, 255, 0.253);
-      aspect-ratio: 16 / 12;
+      max-height: 500px;
+      object-fit: cover; 
+      object-position: center;
     }
 
     &__bottom {
@@ -658,8 +660,8 @@ textarea {
 
     &__bookmark-svg {
       color: #ffffff;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       stroke-width: 1.4px;
       stroke: currentColor;
       stroke-linejoin: round;

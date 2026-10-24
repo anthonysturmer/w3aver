@@ -1,18 +1,70 @@
 [
-  "userexample.com",
-  "https://anthonysturmer.github.io/anthonysturmer/1.jpg",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   [
-    "Games",
-    "Movies",
-    "TV Shows",
-    "Anime",
-    "Manga",
-    "Comics",
-    "Music",
-    "K-Pop",
-    "Board Games",
-    "RPG",
-    "Streaming"
+    "summer-josu.github.io",
+    "https://summer-josu.github.io/exemplo-1/favicon.jpeg",
+    "Um espaço dedicado à ciência, curiosidade e ideias, com textos sobre fenômenos naturais, clima, meio ambiente e outros assuntos explicados de forma acessível.",
+    [
+      "Ciência",
+      "Clima",
+      "Meio Ambiente",
+      "Meteorologia",
+      "El Niño",
+      "Natureza",
+      "Sustentabilidade",
+      "Educação",
+      "Mudanças Climáticas",
+      "Curiosidades"
+    ]
+  ],
+  [
+    "anthonysturmer.github.io",
+    "https://i.pinimg.com/736x/50/94/cf/5094cf75d76706d9812b49a43b9f205c.jpg",
+    "Blog sobre o desenvolvimento do W3aver, explorando descoberta de sites independentes, privacidade, desenvolvimento web e a construção de uma plataforma mais simples e menos dependente de algoritmos.",
+    [
+      "Programação",
+      "Desenvolvimento Web",
+      "W3aver",
+      "Código Aberto",
+      "Privacidade",
+      "Svelte",
+      "Rust",
+      "Software",
+      "Diário de Desenvolvimento",
+      "Web Independente"
+    ]
+  ],
+  [
+    "vegspring.blogspot.com",
+    "https://i.pinimg.com/736x/04/9c/44/049c440f8e6c22f25925a403e8bdc4e2.jpg",
+    "Blog dedicado à culinária vegana e vegetariana, com receitas simples e criativas. Entre os destaques estão sobremesas e pratos preparados sem ingredientes de origem animal.",
+    [
+      "Veganismo",
+      "Receitas",
+      "Culinária",
+      "Sobremesas",
+      "Chocolate",
+      "Confeitaria Vegana",
+      "Alimentação Saudável",
+      "Alimentação Vegetal",
+      "Comida",
+      "Estilo de Vida"
+    ]
+  ],
+  [
+    "cienciahooje.blogspot.com",
+    "https://i.pinimg.com/736x/e1/ea/9c/e1ea9c39a0ec8b0b022f5af8aea13624.jpg",
+    "Blog de divulgação científica com textos sobre descobertas, pesquisas e acontecimentos da ciência. Os artigos procuram explicar temas complexos de forma acessível e contextualizada.",
+    [
+      "Ciência",
+      "Neurociência",
+      "Biologia",
+      "Medicina",
+      "Pesquisa",
+      "Tecnologia",
+      "Física",
+      "Genética",
+      "Notícias Científicas",
+      "Divulgação Científica"
+    ]
   ]
 ]

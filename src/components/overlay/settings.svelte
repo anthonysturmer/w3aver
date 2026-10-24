@@ -6,8 +6,8 @@
 </script>    
     
     <section class="settings">
-      <h1 class="settings__title">Settings</h1>
-      <h2>Basic</h2>
+      <h1 class="settings__title">Configurações</h1>
+      <h2>Básico</h2>
       <section class="settings__section">
         <div class="settings__button">
           Modo escuro <input type="radio" name="modo" />
@@ -16,21 +16,21 @@
           Modo claro <input type="radio" name="modo" />
         </div>
         <div class="settings__button">
-          Font size <input class="settings__number-input" type="number" />
+          Tamanho da fonte <input class="settings__number-input" type="number" />
         </div>
         <div class="settings__button">
-          Language
+          Idioma
           <select class="settings__select">
-            <option>english</option>
-            <option>french</option>
-            <option>portuguese</option>
+            <option>inglês</option>
+            <option>francês</option>
+            <option>português</option>
           </select>
         </div>
 
   
       </section>
 
-      <h2>Account</h2>
+      <h2>Conta</h2>
 
       <section class="settings__section">
         <button class="settings__button" type="button">
@@ -40,11 +40,11 @@
           trocar domínio
         </button>
         <button class="settings__button" type="button">
-          Delete your account
+          Excluir sua conta
         </button>
       </section>
 
-      <h2>Hiden list</h2>
+      <h2>Lista de ocultos</h2>
 
       <section class="settings__section settings__block-list">
 

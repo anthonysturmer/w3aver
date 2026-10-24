@@ -59,17 +59,17 @@
 </script>  
   
   <section class="bookmarks" id="bookmarks">
-      <h1 class="bookmarks__title">Local data</h1>
+      <h1 class="bookmarks__title">Data local</h1>
 
       <div class="local-data__management">
         <div class="local-data__management-menu">
-          <div>
-            <button>copy</button>
-            <button>paste</button>
-            <button>merge</button>
-          </div>
+        <div>
+          <button>copiar</button>
+          <button>colar</button>
+          <button>mesclar</button>
+        </div>
 
-          <button onclick={save_config}>update</button>
+        <button onclick={save_config}>atualizar</button>
         </div>
         <textarea
           spellCheck="false"

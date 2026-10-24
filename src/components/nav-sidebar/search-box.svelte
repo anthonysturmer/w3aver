@@ -12,7 +12,7 @@
     bind:value={query}
       class="search__input"
       type="search"
-      placeholder="Search for websites"
+      placeholder="Pesquise por websites"
     />
     <svg
       class="search__svg"
