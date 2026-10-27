@@ -1,10 +1,8 @@
 <script lang="ts">
-
   import { onMount } from "svelte";
   import Post from "./post.svelte";
   import { type post_data } from "../../global/bookmarks.svelte";
 
-  
   interface feed_props {
     tag: string;
     close_tags_feed: () => void;
@@ -18,60 +16,49 @@
 
   onMount(async () => {
     try {
-        const response = await fetch("/api/posts.json");
-        posts = await response.json();
-         
+      const response = await fetch("/api/posts.json");
+      posts = await response.json();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  })
-
+  });
 </script>
 
-
-
-<button
-      class="profile-top"
-      onclick={close_tags_feed}>
-      
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="m15 18-6-6 6-6" />
-      </svg>
-      <h2 style="font-size: 16px;">{tag}</h2>
+<button class="profile-top" onclick={close_tags_feed}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+  <h2 style="font-size: 16px;">{tag}</h2>
 </button>
 
 <div class="profile-top-background"></div>
 
-
-
-
-
 <section class="search-feed" {style}>
   {#each posts as post, index (index)}
     <Post
-      post={post}
+      {post}
       is_last={index === posts.length - 1}
       on_profile_click={() => on_profile_click(post[0])}
     />
   {/each}
 </section>
 
-
 <style>
-
   .search-feed {
-
-    width: 600px;
+    width: calc(100% - 20px);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 5px;
     margin-bottom: 11px;
     padding-top: 50px;
@@ -80,14 +67,13 @@
     z-index: 101;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.208);
-    border-radius: 5px; 
-    anchor-name: --profile-archor;   
-
+    border-radius: 5px;
+    anchor-name: --profile-archor;
   }
 
-    .profile-top {
-
-    width: 600px;
+  .profile-top {
+    width: calc(100vw - 20px);
+    max-width: 600px;
     top: 10px;
     position-anchor: --profile-archor;
     height: 46px;
@@ -105,28 +91,29 @@
     font-size: 1rem;
     cursor: pointer;
     position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 
     z-index: 103;
-        & h2 {
-       font-size: 0.95rem;
-       font-weight: 500;
-       color: rgb(145, 145, 145);
+    & h2 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgb(145, 145, 145);
     }
   }
 
-    .profile-top-background {
-    width: 608px;
+  .profile-top-background {
+    width: calc(100vw - 12px);
+    max-width: 608px;
     position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
     height: 44px;
-    margin-left: -4px;
     background-color: #0f0f15;
     z-index: 102;
     position-anchor: --profile-archor;
     top: 0;
-
+    box-sizing: border-box;
   }
-
 </style>
-
-
-

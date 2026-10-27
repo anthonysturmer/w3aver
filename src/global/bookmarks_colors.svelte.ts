@@ -2,7 +2,7 @@ type bookmark_color = {
   id: number;
   color: string;
   name: string;
-}
+};
 
 const default_bookmark_colors: bookmark_color[] = [
   {
@@ -49,7 +49,6 @@ const saved_colors =
     ? localStorage.getItem("bookmarks_colors")
     : null;
 
-
 if (!saved_colors) {
   initial_colors = default_bookmark_colors;
 } else {
@@ -66,13 +65,11 @@ export const bookmarks_colors_state = $state<{
   items: initial_colors,
 });
 
-  
 export function add_bookmark_color(color: string, name: string) {
-
   color = color.toUpperCase();
 
   const color_already_exists = bookmarks_colors_state.items.some(
-    (item) => item.color.toUpperCase() === color
+    (item) => item.color.toUpperCase() === color,
   );
 
   if (color_already_exists) {
@@ -87,17 +84,15 @@ export function add_bookmark_color(color: string, name: string) {
 
   localStorage.setItem(
     "bookmarks_colors",
-    JSON.stringify(bookmarks_colors_state.items)
+    JSON.stringify(bookmarks_colors_state.items),
   );
 
   return true;
 }
 
-
-
 export function remove_bookmark_color(id: number) {
   const index = bookmarks_colors_state.items.findIndex(
-    (item) => item.id === id
+    (item) => item.id === id,
   );
 
   if (index === -1) {
@@ -108,36 +103,29 @@ export function remove_bookmark_color(id: number) {
 
   localStorage.setItem(
     "bookmarks_colors",
-    JSON.stringify(bookmarks_colors_state.items)
+    JSON.stringify(bookmarks_colors_state.items),
   );
 
   return true;
 }
 
-
-
 export function edit_bookmark_color(
   id: number,
   new_color: string,
-  new_name: string
+  new_name: string,
 ) {
-
   new_color = new_color.toUpperCase();
 
   const current_item = bookmarks_colors_state.items.find(
-    (item) => item.id === id
+    (item) => item.id === id,
   );
 
   if (!current_item) {
     return false;
   }
 
-  const color_already_exists = 
-  
-  bookmarks_colors_state.items.some(
-    (item) =>
-      item !== current_item &&
-      item.color.toUpperCase() === new_color
+  const color_already_exists = bookmarks_colors_state.items.some(
+    (item) => item !== current_item && item.color.toUpperCase() === new_color,
   );
 
   if (color_already_exists) {
@@ -149,7 +137,7 @@ export function edit_bookmark_color(
 
   localStorage.setItem(
     "bookmarks_colors",
-    JSON.stringify(bookmarks_colors_state.items)
+    JSON.stringify(bookmarks_colors_state.items),
   );
 
   return true;
@@ -160,9 +148,7 @@ function generate_bookmark_color_id() {
 
   do {
     id = Math.floor(Math.random() * 1_000_000_000);
-  } while (
-    bookmarks_colors_state.items.some((item) => item.id === id)
-  );
+  } while (bookmarks_colors_state.items.some((item) => item.id === id));
 
   return id;
 }

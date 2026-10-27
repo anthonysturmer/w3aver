@@ -1,110 +1,97 @@
 <script lang="ts">
-
   import { hidden_state } from "../../global/hidden.svelte";
   import { subscriptions_state } from "../../global/subscriptions.svelte";
   import { bookmarks_state } from "../../global/bookmarks.svelte";
 
   let json = $state(
+    JSON.stringify(
+      {
+        subscriptions: JSON.parse(
+          localStorage.getItem("subscriptions") || "[]",
+        ),
+        bookmarks: JSON.parse(localStorage.getItem("bookmarks") || "[]"),
+        hidden_profiles: JSON.parse(localStorage.getItem("hidden") || "[]"),
+      },
+      null,
+      2,
+    ),
+  );
 
-  JSON.stringify(
-    {
-      subscriptions: JSON.parse(localStorage.getItem('subscriptions') || '[]'),
-      bookmarks: JSON.parse(localStorage.getItem('bookmarks') || '[]'),
-      hidden_profiles: JSON.parse(localStorage.getItem('hidden') || '[]'),
-    }, 
-    null, 
-    2
-  )
-  )
-
-  let error_message = $state('');
+  let error_message = $state("");
 
   function save_config() {
-
-    error_message = ''
+    error_message = "";
 
     try {
-    const parsed = JSON.parse(json)
+      const parsed = JSON.parse(json);
 
-    if (typeof parsed !== 'object' || parsed === null) {
-      throw new Error('O JSON DEVE SER UM OBJETO VÁLIDO')
-    }
+      if (typeof parsed !== "object" || parsed === null) {
+        throw new Error("O JSON DEVE SER UM OBJETO VÁLIDO");
+      }
 
-    if (Array.isArray(parsed.hidden_profiles)) {
-      hidden_state.items = parsed.hidden_profiles;
-      localStorage.setItem('hidden', JSON.stringify(parsed.hidden_profiles))
-    }
+      if (Array.isArray(parsed.hidden_profiles)) {
+        hidden_state.items = parsed.hidden_profiles;
+        localStorage.setItem("hidden", JSON.stringify(parsed.hidden_profiles));
+      }
 
-    if (Array.isArray(parsed.subscriptions)) {
-      
-      localStorage.setItem('subscriptions', JSON.stringify(parsed.subscriptions))
-      subscriptions_state.items = parsed.subscriptions
-    }
+      if (Array.isArray(parsed.subscriptions)) {
+        localStorage.setItem(
+          "subscriptions",
+          JSON.stringify(parsed.subscriptions),
+        );
+        subscriptions_state.items = parsed.subscriptions;
+      }
 
-    if (Array.isArray(parsed.bookmarks)) {
-     
-      localStorage.setItem('bookmarks', JSON.stringify(parsed.bookmarks))
-      bookmarks_state.items = parsed.bookmarks
-    }
-    
+      if (Array.isArray(parsed.bookmarks)) {
+        localStorage.setItem("bookmarks", JSON.stringify(parsed.bookmarks));
+        bookmarks_state.items = parsed.bookmarks;
+      }
     } catch (error: any) {
-      error_message = 'erro de sintaxe do JSON: ' + error.message;
+      error_message = "erro de sintaxe do JSON: " + error.message;
     }
-
-
   }
+</script>
 
+<section class="bookmarks" id="bookmarks">
+  <h1 class="bookmarks__title">Data local</h1>
 
-
-</script>  
-  
-  <section class="bookmarks" id="bookmarks">
-      <h1 class="bookmarks__title">Data local</h1>
-
-      <div class="local-data__management">
-        <div class="local-data__management-menu">
-        <div>
-          <button>copiar</button>
-          <button>colar</button>
-          <button>mesclar</button>
-        </div>
-
-        <button onclick={save_config}>atualizar</button>
-        </div>
-        <textarea
-          spellCheck="false"
-          id="local-data-textarea"
-          class="local-data__textarea"
-          bind:value={json}
-        ></textarea>
-
-        {#if error_message}
-          <p>{error_message}</p>
-        {/if}
+  <div class="local-data__management">
+    <div class="local-data__management-menu">
+      <div>
+        <button>copiar</button>
+        <button>colar</button>
+        <button>mesclar</button>
       </div>
-    </section>
+
+      <button onclick={save_config}>atualizar</button>
+    </div>
+    <textarea
+      spellCheck="false"
+      id="local-data-textarea"
+      class="local-data__textarea"
+      bind:value={json}></textarea>
+
+    {#if error_message}
+      <p>{error_message}</p>
+    {/if}
+  </div>
+</section>
 
 <style>
   .bookmarks {
-  width: 92%;
-  max-width: 580px;
-  display: flex;
-  height: fit-content;
-  background-color: #0f0f15;
+    width: 92%;
+    max-width: 580px;
+    display: flex;
+    height: fit-content;
+    background-color: #0f0f15;
 
-  gap: 40px;
-  flex-direction: column;
-  box-sizing: border-box;
-  justify-content: center;
-  padding-bottom: 100px;
-  padding-top: 100px;
-  color: white;
-}
-
-  .local-data__div {
-    width: 100%;
-    background-color: #181820;
-    position: relative;
+    gap: 40px;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: center;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    color: white;
   }
 
   .local-data__textarea {
@@ -170,5 +157,4 @@
   .local-data__management-menu > button:hover {
     background-color: #3a3d93;
   }
-
 </style>

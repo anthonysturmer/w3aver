@@ -13,10 +13,7 @@ function get_hostname(url: string) {
 
 function persists() {
   if (typeof window !== "undefined") {
-    localStorage.setItem(
-      "hidden",
-      JSON.stringify(hidden_state.items),
-    );
+    localStorage.setItem("hidden", JSON.stringify(hidden_state.items));
   }
 }
 
@@ -36,9 +33,7 @@ export function hide_profile(url: string) {
 
 export function show_profile(hostname: string) {
   if (hidden_state.items.includes(hostname)) {
-    hidden_state.items = hidden_state.items.filter(
-      (name) => name !== hostname,
-    );
+    hidden_state.items = hidden_state.items.filter((name) => name !== hostname);
 
     persists();
   }

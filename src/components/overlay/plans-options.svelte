@@ -7,27 +7,20 @@
 </script>
 
 <section class="plans">
-
   <div class="plans__header">
     <h1>Opções de assinatura</h1>
 
-    <p>
-      Escolha os recursos que fazem sentido para você.
-    </p>
+    <p>Escolha os recursos que fazem sentido para você.</p>
   </div>
 
-
   <div class="plans__list">
-
     <!-- USUÁRIO -->
     <button
       class="plan"
       class:selected={selected_plan === "user"}
       onclick={() => select_plan("user")}
     >
-
       <div class="plan__top">
-
         <div class="plan__icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,28 +40,23 @@
           <h2>Armazenamento na nuvem</h2>
 
           <p>
-            Para salvar seus dados na nuvem,  e sincronizar entre diferentes dispositivos.
+            Para salvar seus dados na nuvem, e sincronizar entre diferentes
+            dispositivos.
           </p>
         </div>
-
       </div>
-
 
       <div class="plan__price">
         <strong>$4</strong>
         <span>/ mês</span>
       </div>
 
-
       <div class="plan__divider"></div>
 
-
       <div class="plan__section">
-
         <h3>O que muda com a assinatura</h3>
 
         <ul>
-
           <li>
             <span>✓</span>
             Armazenamento dos seus dados na nuvem
@@ -98,18 +86,11 @@
             <span>✓</span>
             Preferências sincronizadas
           </li>
-
         </ul>
-
       </div>
 
-
-      <div class="plan__action">
-        Escolher plano
-      </div>
-
+      <div class="plan__action">Escolher plano</div>
     </button>
-
 
     <!-- CRIADOR -->
     <button
@@ -117,9 +98,7 @@
       class:selected={selected_plan === "creator"}
       onclick={() => select_plan("creator")}
     >
-
       <div class="plan__top">
-
         <div class="plan__icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -140,28 +119,23 @@
           <h2>Criador</h2>
 
           <p>
-            Recursos exclusivos para quem publica e mantém conteúdo independente.
+            Recursos exclusivos para quem publica e mantém conteúdo
+            independente.
           </p>
         </div>
-
       </div>
-
 
       <div class="plan__price">
         <strong>$5</strong>
         <span>/ mês</span>
       </div>
 
-
       <div class="plan__divider"></div>
 
-
       <div class="plan__section">
-
         <h3>O que muda com a assinatura</h3>
 
         <ul>
-
           <li>
             <span>✓</span>
             Mais posts por dia
@@ -169,7 +143,7 @@
 
           <li>
             <span>✓</span>
-            Descrições de posts mais longas 
+            Descrições de posts mais longas
           </li>
 
           <li>
@@ -181,18 +155,11 @@
             <span>✓</span>
             Recursos de personalização de posts
           </li>
-
         </ul>
-
       </div>
 
-
-      <div class="plan__action">
-        Escolher plano
-      </div>
-
+      <div class="plan__action">Escolher plano</div>
     </button>
-
 
     <!-- COMPLETO -->
     <button
@@ -200,9 +167,7 @@
       class:selected={selected_plan === "complete"}
       onclick={() => select_plan("complete")}
     >
-
       <div class="plan__top">
-
         <div class="plan__icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -223,28 +188,23 @@
           <h2>Completo</h2>
 
           <p>
-            Armazenamento na nuvem, sincronização e todos os recursos do plano "Criador".
+            Armazenamento na nuvem, sincronização e todos os recursos do plano
+            "Criador".
           </p>
         </div>
-
       </div>
-
 
       <div class="plan__price">
         <strong>$7</strong>
         <span>/ mês</span>
       </div>
 
-
       <div class="plan__divider"></div>
 
-
       <div class="plan__section">
-
         <h3>O que muda com a assinatura</h3>
 
         <ul>
-
           <li>
             <span>✓</span>
             Todos os recursos do plano Usuário
@@ -264,25 +224,15 @@
             <span>✓</span>
             Recursos exclusivos para criadores
           </li>
-
         </ul>
-
       </div>
 
-
-      <div class="plan__action">
-        Escolher plano
-      </div>
-
+      <div class="plan__action">Escolher plano</div>
     </button>
-
   </div>
-
 </section>
 
-
 <style lang="scss">
-
   .plans {
     width: 92%;
     max-width: 1050px;
@@ -293,7 +243,6 @@
 
     box-sizing: border-box;
   }
-
 
   .plans__header {
     margin-bottom: 32px;
@@ -314,7 +263,6 @@
     }
   }
 
-
   .plans__list {
     display: grid;
 
@@ -324,7 +272,6 @@
 
     align-items: stretch;
   }
-
 
   .plan {
     position: relative;
@@ -357,20 +304,14 @@
       background-color 160ms ease,
       transform 160ms ease;
 
-
     &:hover {
-     
-
       border-color: rgba(255, 255, 255, 0.25);
     }
 
-
     &.selected {
       border-color: rgba(255, 255, 255, 0.65);
-
     }
   }
-
 
   .plan__top {
     display: flex;
@@ -381,7 +322,6 @@
 
     min-height: 58px;
   }
-
 
   .plan__icon {
     width: 42px;
@@ -400,18 +340,15 @@
 
     color: rgba(255, 255, 255, 0.8);
 
-
     svg {
       width: 21px;
       height: 21px;
     }
   }
 
-
   .plan__top-text {
     min-width: 0;
   }
-
 
   .plan__top h2 {
     margin: 2px 0 4px;
@@ -420,7 +357,6 @@
 
     font-weight: 600;
   }
-
 
   .plan__top p {
     margin: 0;
@@ -432,7 +368,6 @@
     line-height: 1.4;
   }
 
-
   .plan__price {
     display: flex;
 
@@ -442,7 +377,6 @@
 
     margin-top: 25px;
 
-
     strong {
       font-size: 2rem;
 
@@ -451,14 +385,12 @@
       letter-spacing: -0.04em;
     }
 
-
     span {
       color: rgba(255, 255, 255, 0.4);
 
       font-size: 0.82rem;
     }
   }
-
 
   .plan__divider {
     height: 1px;
@@ -472,12 +404,10 @@
     flex-shrink: 0;
   }
 
-
   .plan__section {
     flex: 1;
 
     min-height: 0;
-
 
     h3 {
       margin: 0 0 14px;
@@ -488,7 +418,6 @@
 
       color: rgba(255, 255, 255, 0.45);
     }
-
 
     ul {
       margin: 0;
@@ -504,7 +433,6 @@
       gap: 12px;
     }
 
-
     li {
       display: flex;
 
@@ -519,7 +447,6 @@
       line-height: 1.35;
     }
 
-
     li span {
       flex-shrink: 0;
 
@@ -528,7 +455,6 @@
       font-size: 0.78rem;
     }
   }
-
 
   .plan__action {
     display: flex;
@@ -555,7 +481,6 @@
 
     transition: background 160ms ease;
 
-
     .selected & {
       background: rgba(255, 255, 255, 0.1);
 
@@ -563,22 +488,15 @@
     }
   }
 
-
   @media (max-width: 850px) {
-
     .plans__list {
       grid-template-columns: 1fr;
     }
-
   }
 
-
   @media (max-width: 600px) {
-
     .plans {
       padding-top: 60px;
     }
-
   }
-
 </style>

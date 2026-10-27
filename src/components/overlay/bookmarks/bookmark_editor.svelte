@@ -2,77 +2,69 @@
   import {
     add_bookmark_color,
     remove_bookmark_color,
-    edit_bookmark_color
+    edit_bookmark_color,
   } from "../../../global/bookmarks_colors.svelte";
 
   type BookmarkEditorMode = "create" | "edit";
 
-interface Props {
-  mode: BookmarkEditorMode;
-  initial_id?: number;
-  initial_name: string;
-  initial_color: string;
-  on_close: () => void;
-}
-
-  let {
-    mode,
-    initial_id,
-    initial_name,
-    initial_color,
-    on_close
-  }: Props = $props();
-
-  let name = $state(initial_name);
-  let color = $state(initial_color);
-
-function handle_save() {
-  if (!name.trim() || !color.trim()) {
-    return;
+  interface Props {
+    mode: BookmarkEditorMode;
+    initial_id?: number;
+    initial_name: string;
+    initial_color: string;
+    on_close: () => void;
   }
 
-  let success: boolean;
+  let { mode, initial_id, initial_name, initial_color, on_close }: Props =
+    $props();
 
-  if (mode === "create") {
-    success = add_bookmark_color(color, name);
-  } else {
+  let name = $state("");
+  let color = $state("#ffffff");
+
+  $effect(() => {
+    name = initial_name;
+    color = initial_color;
+  });
+
+  function handle_save() {
+    if (!name.trim() || !color.trim()) {
+      return;
+    }
+
+    let success: boolean;
+
+    if (mode === "create") {
+      success = add_bookmark_color(color, name);
+    } else {
+      if (initial_id === undefined) {
+        return;
+      }
+
+      success = edit_bookmark_color(initial_id, color, name);
+    }
+
+    if (success) {
+      on_close();
+    }
+  }
+
+  function handle_delete() {
     if (initial_id === undefined) {
       return;
     }
 
-    success = edit_bookmark_color(
-      initial_id,
-      color,
-      name
-    );
-  }
+    const success = remove_bookmark_color(initial_id);
 
-  if (success) {
-    on_close();
+    if (success) {
+      on_close();
+    }
   }
-}
-
-function handle_delete() {
-  if (initial_id === undefined) {
-    return;
-  }
-
-  const success = remove_bookmark_color(initial_id);
-
-  if (success) {
-    on_close();
-  }
-}
 </script>
 
 <div class="bookmarks__blur"></div>
 
 <section class="bookmarks__edit-section">
-
-  <button
-    class="bookmarks__edit-section-close-button"
-    onclick={on_close}
-  >
+  <button class="bookmarks__edit-section-close-button" onclick={on_close}>
     x
   </button>
 
@@ -80,10 +72,7 @@ function handle_delete() {
     {mode === "edit" ? "Edit Bookmark" : "New Bookmark"}
   </p>
 
-  <input
-    placeholder="name"
-    bind:value={name}
-  />
+  <input placeholder="name" bind:value={name} />
 
   <input
     placeholder="color"
@@ -113,21 +102,13 @@ function handle_delete() {
   </svg>
 
   <div class="bookmarks__edit-section-buttons-div">
-
     {#if mode === "edit"}
-      <button onclick={handle_delete}>
-        delete
-      </button>
+      <button onclick={handle_delete}> delete </button>
     {/if}
 
-    <button onclick={handle_save}>
-      save
-    </button>
-
+    <button onclick={handle_save}> save </button>
   </div>
-
 </section>
-
 
 <style lang="scss">
   .bookmarks__edit-section {

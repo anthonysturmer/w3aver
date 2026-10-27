@@ -2,13 +2,10 @@
   import {
     is_subscribed,
     toggle_subscriptions,
-    
   } from "../../global/subscriptions.svelte";
 
   import { bookmarks_colors_state } from "../../global/bookmarks_colors.svelte";
   import { iframe_url } from "../../global/iframe.svelte";
-
-
 
   import {
     is_bookmarked,
@@ -19,46 +16,42 @@
   import { is_hidden, hide_profile } from "../../global/hidden.svelte";
 
   interface post_props {
-    post: any;
+    post: post_data;
     favicon?: string;
     on_profile_click: () => void;
     is_last: boolean;
   }
 
-$effect(() => {
-  function handle_click(event: MouseEvent) {
-    const target = event.target;
+  $effect(() => {
+    function handle_click(event: MouseEvent) {
+      const target = event.target;
 
-    if (!(target instanceof Element)) return;
+      if (!(target instanceof Element)) return;
 
-    if (
-      !target.closest(".post__bookmarks_options_div") &&
-      !target.closest(".post__bookmark-button")
-    ) {
-      bookmarks_options = false;
+      if (
+        !target.closest(".post__bookmarks_options_div") &&
+        !target.closest(".post__bookmark-button")
+      ) {
+        bookmarks_options = false;
+      }
     }
-  }
 
-  document.addEventListener("click", handle_click);
+    document.addEventListener("click", handle_click);
 
-  return () => {
-    document.removeEventListener("click", handle_click);
-  };
-});
-  
+    return () => {
+      document.removeEventListener("click", handle_click);
+    };
+  });
 
   let {
-    post_link,
     post,
     favicon,
     on_profile_click,
     is_last = false,
   }: post_props = $props();
 
-
-
   let bottom_space: HTMLElement;
-  let bookmarks_options_div: HTMLElement; 
+  let bookmarks_options_div: HTMLElement;
 
   function compare_widths() {
     const available_width = bottom_space.getBoundingClientRect().width;
@@ -71,41 +64,37 @@ $effect(() => {
     }
   }
 
-  let dominium = new URL(post[0]).hostname
+  let dominium = $derived(new URL(post[0]).hostname);
   let bookmarks_options = $state(false);
   let bookmark_color = $derived(get_bookmark_color(post));
   let subscribed = $derived(is_subscribed(dominium));
   let bookmarked = $derived(is_bookmarked(post));
   let hidden = $derived(is_hidden(post[0]));
-
-  
-  
 </script>
 
 <article
-  onclick={(event) => {
-    const target = event.target;
-
-    if (!(target instanceof Element)) return;
-
-    if (target.closest("button, a, input, .post__bookmarks_options_div")) {
-      return;
-    }
-
-    iframe_url.url = post[0];
-  }}
   class="post {is_last ? 'post--last' : ''}"
   style:display={hidden ? "none" : undefined}
 >
   <div class="post__profile">
     <button class="post__profile-left" onclick={on_profile_click}>
-      <img loading="lazy" src={post[1]} class="post__favicon" alt="favicon" />
-      <p class="post__profile-name">{dominium }</p>
+      <img
+        loading="lazy"
+        src={post[1]}
+        class="post__favicon"
+        alt={`Favicon de ${dominium}`}
+      />
+      <p class="post__profile-name">{dominium}</p>
     </button>
 
     <div class="post__profile-right">
       {#if !subscribed}
-        <button class="post__hide-button" onclick={() => hide_profile(post[0])}>
+        <button
+          class="post__hide-button"
+          onclick={() => hide_profile(post[0])}
+          aria-label={`Ocultar ${dominium}`}
+          title={`Ocultar ${dominium}`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -145,19 +134,34 @@ $effect(() => {
     </div>
   </div>
 
-  <h2 class="post__title">{post[2]}</h2>
+  <a
+    class="post__content-link"
+    href={post[0]}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Abrir o site: ${post[2]}`}
+    onclick={(event) => {
+      event.preventDefault();
+      iframe_url.url = post[0];
+    }}
+  >
+    <h2 class="post__title">{post[2]}</h2>
 
-  {#if post[3]}
-    <img loading="lazy" src={post[3]} class="post__img" alt="post" />
-  {/if}
+    {#if post[3]}
+      <img
+        loading="lazy"
+        src={post[3]}
+        class="post__img"
+        alt={`Imagem do post: ${post[2]}`}
+      />
+    {/if}
 
-  {#if post[4]}
-    <p class="post__description">{post[4]}</p>
-  {/if}
+    {#if post[4]}
+      <p class="post__description">{post[4]}</p>
+    {/if}
+  </a>
 
   <div class="post__bottom">
-
-
     <time class="post__data">{post[6]}</time>
 
     <div class="post__tag-div">
@@ -168,48 +172,49 @@ $effect(() => {
 
     <div bind:this={bottom_space} class="post__bottom-space"></div>
 
-<div
-  class="post__bookmarks_options_div"
-  class:open={bookmarks_options}
-  bind:this={bookmarks_options_div}
->
-{#each bookmarks_colors_state.items as bookmark_color_option, index}
-  <svg
-    class="post__bookmark-svg"
-    style={`--delay: ${index * 20}ms`}
-    onclick={() => {
-      toggle_bookmarks(post, bookmark_color_option.id);
-    }}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill={
-      bookmark_color === bookmark_color_option.color
-        ? bookmark_color_option.color
-        : "none"
-    }
-    stroke={bookmark_color_option.color}
-    stroke-width="1.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-  <path
-    d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a1 1 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
-  ></path>
-  </svg>
-{/each}
-</div>
+    <div
+      class="post__bookmarks_options_div"
+      class:open={bookmarks_options}
+      bind:this={bookmarks_options_div}
+    >
+      {#each bookmarks_colors_state.items as bookmark_color_option, index}
+        <button
+          type="button"
+          class="post__bookmark-option"
+          style={`--delay: ${index * 20}ms`}
+          onclick={() => toggle_bookmarks(post, bookmark_color_option.id)}
+          aria-label={`Salvar com a cor ${bookmark_color_option.color}`}
+          title={`Salvar com a cor ${bookmark_color_option.color}`}
+        >
+          <svg
+            class="post__bookmark-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={bookmark_color === bookmark_color_option.color
+              ? bookmark_color_option.color
+              : "none"}
+            stroke={bookmark_color_option.color}
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a1 1 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+            ></path>
+          </svg>
+        </button>
+      {/each}
+    </div>
 
     <button
-
       onclick={() => {
-      
-      bookmarks_options = !bookmarks_options;
+        bookmarks_options = !bookmarks_options;
 
         requestAnimationFrame(() => {
           compare_widths();
         });
-    }}
-
+      }}
       class="post__bookmark-button"
       class:active={bookmarked && !bookmarks_options}
       style:opacity={bookmarks_options ? "0.4" : undefined}
@@ -233,22 +238,6 @@ $effect(() => {
   </div>
 </article>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style lang="scss">
   .post {
     width: 100%;
@@ -264,6 +253,15 @@ $effect(() => {
 
     &--last {
       border-bottom: 0;
+    }
+
+    &__content-link {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: inherit;
+      text-decoration: none;
     }
 
     &__profile {
@@ -305,7 +303,6 @@ $effect(() => {
       height: 38px;
       border-radius: 50%;
       background-color: rgb(119, 127, 135);
-
     }
 
     &__subscribe {
@@ -352,7 +349,7 @@ $effect(() => {
       width: 100%;
       border: 1px solid rgba(255, 255, 255, 0.253);
       aspect-ratio: 16 / 12;
-      object-fit: cover; 
+      object-fit: cover;
       object-position: center;
     }
 
@@ -378,11 +375,10 @@ $effect(() => {
     }
 
     &__tag-div {
-      
       display: flex;
       flex-direction: row;
       gap: 12px;
-      
+
       margin-left: 18px;
     }
 
@@ -402,60 +398,68 @@ $effect(() => {
       flex: 1;
     }
 
-&__bookmarks_options_div {
-  
-  position: absolute;
-  right: 28px;
-  background-color: aliceblue;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-start;
-  gap: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  width: fit-content;
-  background-color: #0f0f15;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 400ms ease;
+    &__bookmarks_options_div {
+      position: absolute;
+      right: 28px;
+      background-color: aliceblue;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      gap: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: fit-content;
+      background-color: #0f0f15;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 400ms ease;
 
+      .post__bookmark-option {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateX(20px) scale(0.7);
+        cursor: pointer;
+        transition:
+          opacity 180ms ease,
+          transform 180ms ease;
 
-  .post__bookmark-svg {
-    opacity: 0;
-    transform: translateX(20px) scale(0.7);
-    cursor: pointer;
+        &:hover {
+          transform: scale(1.1);
+          transition-delay: 0ms;
+        }
+      }
 
-      transition:
-        opacity 180ms ease,
-        transform 180ms ease,
-        
+      .post__bookmark-option .post__bookmark-svg {
+        opacity: 1;
+        transform: none;
+      }
+
+      &.open {
+        opacity: 1;
+        pointer-events: auto;
+
+        .post__bookmark-option {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+          transition-delay: var(--delay);
+        }
+      }
+
+      .post__bookmark-svg:hover {
+        transition-delay: 0ms;
+        transform: scale(1.1);
+      }
     }
-
-  &.open {
-    opacity: 1;
-    pointer-events: auto;
-
-    .post__bookmark-svg {
-      opacity: 1;
-      transform: translateX(0) scale(1);
-      transition-delay: var(--delay);
-      
-    }
-  }
-
-
-
-.post__bookmark-svg:hover {
-  transition-delay: 0ms;
-  transform: scale(1.1);
-}
-}
-
-    
 
     &__bookmark-button {
-
-      
       width: 30px;
       height: 30px;
       border-radius: 50%;
@@ -475,9 +479,7 @@ $effect(() => {
       }
 
       &:hover {
-        transform: scale(
-          1.1
-        ); 
+        transform: scale(1.1);
       }
     }
 
@@ -507,9 +509,8 @@ $effect(() => {
       }
     }
 
-  .post__subscribe-svg path{
-    color: rgba(255, 255, 255, 0.208);
-}
+    .post__subscribe-svg path {
+      color: rgba(255, 255, 255, 0.208);
+    }
   }
-
 </style>

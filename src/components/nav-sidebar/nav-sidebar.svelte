@@ -43,7 +43,6 @@
     />
     <button
       class="nav-sidebar__about-button"
-      
       onclick={() => on_open_overlay("About")}
       aria-label="about button"
     >
@@ -65,47 +64,47 @@
     </button>
   </div>
 
-  <SearchBox/>
-<div class="nav-sidebar__buttons-box">
-  <button
-    class="nav-sidebar__button"
-    onclick={handle_subscriptions_click}
-    class:active={subscriptions_box_option}
-  >
-    <svg
-      class="nav-sidebar__button-svg"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.6"
+  <SearchBox />
+  <div class="nav-sidebar__buttons-box">
+    <button
+      class="nav-sidebar__button"
+      onclick={handle_subscriptions_click}
+      class:active={subscriptions_box_option}
     >
-      <path
-        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
-      ></path>
-      <path d="m9 12 2 2 4-4"></path>
-    </svg>
-    <p class="nav-sidebar__button-p">Inscrições</p>
-  </button>
+      <svg
+        class="nav-sidebar__button-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <path
+          d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+        ></path>
+        <path d="m9 12 2 2 4-4"></path>
+      </svg>
+      <p class="nav-sidebar__button-p">Inscrições</p>
+    </button>
 
-  <button
-    class="nav-sidebar__button"
-    onclick={handle_explore_click}
-    class:active={explore_box_option}
-  >
-    <svg
-      class="nav-sidebar__button-svg"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 16 16"
+    <button
+      class="nav-sidebar__button"
+      onclick={handle_explore_click}
+      class:active={explore_box_option}
     >
-      <path
-        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484q-.121.12-.242.234c-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"
-      ></path>
-    </svg>
-    <p class="nav-sidebar__button-p">Explore</p>
-  </button>
-</div>
+      <svg
+        class="nav-sidebar__button-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484q-.121.12-.242.234c-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"
+        ></path>
+      </svg>
+      <p class="nav-sidebar__button-p">Explore</p>
+    </button>
+  </div>
 
   <ExploreBox tag_selected={on_tag_selected} is_visible={explore_box_option} />
 
@@ -124,20 +123,6 @@
     z-index: 100000000000000000;
     transition: width 0.2s ease;
 
-    &__search-action-button {
-      height: 54px;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      border: 0px;
-      color: white;
-      width: 56px;
-
-      &:hover {
-        background-color: #ffffff07;
-      }
-    }
     &__about-button {
       background-color: transparent;
       border: 0px solid black;
@@ -146,13 +131,13 @@
       align-items: center;
     }
 
-  &__header {
-    width: 96%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+    &__header {
+      width: 96%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     &__title {
       font-size: 2rem;
@@ -163,48 +148,57 @@
       padding-bottom: 14px;
     }
 
-    &__button {
-    height: 52px;
-    width: 100%;
-    background-color: transparent;
-    color: #ffffffb2; 
-    border: 0px solid black;
-    font-size: 0.95rem;
-    display: flex;
-    flex-direction: row;
-    padding-left: 12px;
-    align-items: center;
-    box-sizing: border-box;
+    @media (max-width: 1100px) {
 
-    & svg path {
+    &__header {
+      display: none;
+    }
+
+  }
+
+
+    &__button {
+      height: 52px;
+      width: 100%;
+      background-color: transparent;
+      color: #ffffffb2;
+      border: 0px solid black;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: row;
+      padding-left: 12px;
+      align-items: center;
+      box-sizing: border-box;
+
+      & svg path {
         color: #ffffffb2;
       }
 
-    &:hover {
-      background-color: #ffffff18;
-    }
+      &:hover {
+        background-color: #ffffff18;
+      }
 
-    &.active {
-      color: #ffffff; 
-
-      & svg path {
+      &.active {
         color: #ffffff;
+
+        & svg path {
+          color: #ffffff;
+        }
       }
     }
-  }
 
-&__button-svg {
-  width: 18px;
-  height: 18px;
-  color: inherit; 
-}
+    &__button-svg {
+      width: 18px;
+      height: 18px;
+      color: inherit;
+    }
 
-&__button-p {
-  text-align: left;
-  color: inherit; 
-  padding-left: 12px;
-  font-size: 0.9rem;
-}
+    &__button-p {
+      text-align: left;
+      color: inherit;
+      padding-left: 12px;
+      font-size: 0.9rem;
+    }
 
     &__buttons-box {
       width: 100%;
@@ -214,4 +208,40 @@
       color: #666666;
     }
   }
+
+    
+  @media (max-width: 1100px) {
+
+    .nav-sidebar {
+      margin-top: 58px;
+    }
+
+  }
+  
+  @media (max-width: 1240px) {
+    .nav-sidebar {
+      width: 260px;
+    }
+  }
+    @media (max-width: 1100px) {
+    .nav-sidebar {
+      width: 300px;
+    }
+  }
+  @media (max-width: 900px) {
+    .nav-sidebar {
+      width: 260px;
+    }
+  }
+
+   @media (max-width: 760px) {
+
+    .nav-sidebar {
+      display: none;
+    }
+
+  }
+
+
+
 </style>

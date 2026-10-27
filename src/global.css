@@ -11,10 +11,20 @@ body {
   background-color: #0f0f15;
   width: 100vw;
   display: flex;
+  align-items: center;
   justify-content: center;
+
   overflow-x: hidden;
 }
 
 button {
   cursor: pointer;
+}
+
+#app {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }

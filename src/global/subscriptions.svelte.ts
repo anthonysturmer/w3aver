@@ -12,9 +12,8 @@ export function is_subscribed(author_name: string) {
 }
 
 export function toggle_subscriptions(author_name: string) {
+  author_name = new URL(author_name).hostname;
 
-  author_name = new URL(author_name).hostname
-  
   const exists = is_subscribed(author_name);
 
   if (exists) {

@@ -1,86 +1,67 @@
 <script lang="ts">
+  import { hidden_state, show_profile } from "../../global/hidden.svelte";
+</script>
 
+<section class="settings">
+  <h1 class="settings__title">Configurações</h1>
+  <h2>Básico</h2>
+  <section class="settings__section">
+    <div class="settings__button">
+      Modo escuro <input type="radio" name="modo" />
+    </div>
+    <div class="settings__button">
+      Modo claro <input type="radio" name="modo" />
+    </div>
+    <div class="settings__button">
+      Tamanho da fonte <input class="settings__number-input" type="number" />
+    </div>
+    <div class="settings__button">
+      Idioma
+      <select class="settings__select">
+        <option>inglês</option>
+        <option>francês</option>
+        <option>português</option>
+      </select>
+    </div>
+  </section>
 
-   import { hidden_state, show_profile } from "../../global/hidden.svelte";
+  <h2>Conta</h2>
 
-</script>    
-    
-    <section class="settings">
-      <h1 class="settings__title">Configurações</h1>
-      <h2>Básico</h2>
-      <section class="settings__section">
-        <div class="settings__button">
-          Modo escuro <input type="radio" name="modo" />
-        </div>
-        <div class="settings__button">
-          Modo claro <input type="radio" name="modo" />
-        </div>
-        <div class="settings__button">
-          Tamanho da fonte <input class="settings__number-input" type="number" />
-        </div>
-        <div class="settings__button">
-          Idioma
-          <select class="settings__select">
-            <option>inglês</option>
-            <option>francês</option>
-            <option>português</option>
-          </select>
-        </div>
+  <section class="settings__section">
+    <button class="settings__button" type="button"> trocar senha </button>
+    <button class="settings__button" type="button"> trocar domínio </button>
+    <button class="settings__button" type="button"> Excluir sua conta </button>
+  </section>
 
-  
-      </section>
+  <h2>Lista de ocultos</h2>
 
-      <h2>Conta</h2>
-
-      <section class="settings__section">
-        <button class="settings__button" type="button">
-          trocar senha
-        </button>
-        <button class="settings__button" type="button">
-          trocar domínio
-        </button>
-        <button class="settings__button" type="button">
-          Excluir sua conta
-        </button>
-      </section>
-
-      <h2>Lista de ocultos</h2>
-
-      <section class="settings__section settings__block-list">
-
-
-      {#each hidden_state.items as author_name}
-
-        <div class="settings__div">
-          <p>{author_name}</p> <button onclick={() => show_profile(author_name)}>x</button>
-        </div>
-      {:else}
-
-       <p>Nenhum perfil escondido</p>
-
-      {/each}
-
-      </section>
-    </section>
-
+  <section class="settings__section settings__block-list">
+    {#each hidden_state.items as author_name}
+      <div class="settings__div">
+        <p>{author_name}</p>
+        <button onclick={() => show_profile(author_name)}>x</button>
+      </div>
+    {:else}
+      <p>Nenhum perfil escondido</p>
+    {/each}
+  </section>
+</section>
 
 <style>
-
-
-.settings {
-  width: 92%;
-  max-width: 580px;
-  height: fit-content;
-  background-color: #0f0f15;
-  align-items: center;
-  display: flex;
-  gap: 40px;
-  flex-direction: column;
-  box-sizing: border-box;
-  justify-content: flex-start;
-  padding-bottom: 100px;
-  padding-top: 100px;
-}
+  .settings {
+    width: 92%;
+    max-width: 580px;
+    height: fit-content;
+    background-color: #0f0f15;
+    align-items: center;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    padding-bottom: 100px;
+    padding-top: 100px;
+  }
   .settings__section {
     width: 100%;
     height: fit-content;
@@ -124,7 +105,7 @@
     align-items: center;
   }
 
-    .settings__div {
+  .settings__div {
     height: 54px;
     border: 0;
     background-color: transparent;
@@ -163,7 +144,8 @@
     flex-direction: column;
   }
 
-  .settings__block-list > div > p, .settings__block-list > div > button {
+  .settings__block-list > div > p,
+  .settings__block-list > div > button {
     width: fit-content;
     height: fit-content;
     color: #979797;
@@ -191,5 +173,4 @@
     outline: 1px solid white;
     border: 0px solid black;
   }
-
 </style>

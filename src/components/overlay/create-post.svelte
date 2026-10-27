@@ -31,23 +31,19 @@
     image_or_text = "text";
   }
 
-
-let can_publish = $derived(
-  url_input.trim() !== "" &&
-  title_input.trim() !== "" &&
-  (
-    image_or_text === "image"
-      ? image_input.trim() !== ""
-      : text_input.trim() !== ""
-  )
-);
+  let can_publish = $derived(
+    url_input.trim() !== "" &&
+      title_input.trim() !== "" &&
+      (image_or_text === "image"
+        ? image_input.trim() !== ""
+        : text_input.trim() !== ""),
+  );
 </script>
 
 <section class="new-post">
   <div class="new-post__inputs-div">
     <h2 class="title">Criar uma nova publicação</h2>
     <input
-
       bind:value={url_input}
       class="new-post__long-input"
       type="url"
@@ -61,23 +57,31 @@ let can_publish = $derived(
     />
 
     <div class="new-post__image-or-description-div">
-    <button
-      onclick={use_image}
-      style:color={image_or_text === "text" ? "gray" : undefined}
-      style:background-color={image_or_text === "image" ? "rgb(30, 70, 164)" : undefined}
-      style:border={image_or_text === "image" ? "1px solid rgb(30, 70, 164)" : undefined}
-    >
-      Usar uma imagem
-    </button>
+      <button
+        onclick={use_image}
+        style:color={image_or_text === "text" ? "gray" : undefined}
+        style:background-color={image_or_text === "image"
+          ? "rgb(30, 70, 164)"
+          : undefined}
+        style:border={image_or_text === "image"
+          ? "1px solid rgb(30, 70, 164)"
+          : undefined}
+      >
+        Usar uma imagem
+      </button>
 
-    <button
-      onclick={use_text}
-      style:color={image_or_text === "image" ? "gray" : undefined}
-      style:background-color={image_or_text === "text" ? "rgb(30, 70, 164)" : undefined}
-      style:border={image_or_text === "text" ? "1px solid rgb(30, 70, 164)" : undefined}
-    >
-      Usar uma descrição em texto
-    </button>
+      <button
+        onclick={use_text}
+        style:color={image_or_text === "image" ? "gray" : undefined}
+        style:background-color={image_or_text === "text"
+          ? "rgb(30, 70, 164)"
+          : undefined}
+        style:border={image_or_text === "text"
+          ? "1px solid rgb(30, 70, 164)"
+          : undefined}
+      >
+        Usar uma descrição em texto
+      </button>
     </div>
 
     {#if image_or_text === "image"}
@@ -92,8 +96,7 @@ let can_publish = $derived(
         placeholder="Adicione uma descrição para a sua publicação"
         spellcheck="false"
         autocapitalize="none"
-        autocomplete="off"
-      ></textarea>
+        autocomplete="off"></textarea>
     {/if}
 
     <div class="new-post__tags-input-div">
@@ -102,10 +105,7 @@ let can_publish = $derived(
       <input placeholder="Tag 3" bind:value={tag_3_input} />
     </div>
 
-
-
-
-<!--
+    <!--
 <label class="new-post__agreement">
   <input type="checkbox" />
 
@@ -120,13 +120,12 @@ let can_publish = $derived(
 </label>
 -->
 
-
-
-
     <div class="new-post__publish-div">
-      <button class="new-post__publish-button" 
-      style:background-color={can_publish ? "white" : undefined}
-      >Publicar sua postagem</button>
+      <button
+        class="new-post__publish-button"
+        style:background-color={can_publish ? "white" : undefined}
+        >Publicar sua postagem</button
+      >
     </div>
   </div>
 
@@ -145,7 +144,12 @@ let can_publish = $derived(
 
         <div class="post__profile-right">
           {#if !subscribed}
-            <button class="post__hide-button">
+            <button
+              type="button"
+              class="post__hide-button"
+              aria-label="Ocultar exemplo"
+              title="Ocultar exemplo"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -185,11 +189,11 @@ let can_publish = $derived(
             {/if}
           </button>
         </div>
-
-        
       </div>
 
-      <h2 class="post__title">{title_input || "Título da sua publicação aqui"}</h2>
+      <h2 class="post__title">
+        {title_input || "Título da sua publicação aqui"}
+      </h2>
 
       {#if image_or_text === "image"}
         <div transition:slide={{ duration: 250, easing: cubicOut }}>
@@ -245,50 +249,35 @@ let can_publish = $derived(
         </button>
       </div>
     </article>
-
-
   </div>
 </section>
 
 <style lang="scss">
-
-input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background-color: #0f0f15;
-  border: 1px solid rgba(255, 255, 255, 0.279);
-  border-radius: 4px;
-  cursor: pointer;
-  flex: 0 0 auto;
-
-}
-
-.title {
-  font-size: 2rem;
-  padding-bottom: 20px;
-  padding-left: 5px;
-}
-
-.new-post {
-  width: fit-content;
-  height: fit-content;
-  background-color: #0f0f15;
-  display: flex;
-  gap: 48px;
-  flex-direction: row;
-  box-sizing: border-box;
-  justify-content: flex-start;
-  padding-bottom: 100px;
-  padding-top: 100px;
-  color: rgb(35, 60, 206);
-
-  @media (max-width: 1200px) {
-    flex-direction: column;
+  .title {
+    font-size: 2rem;
+    padding-bottom: 20px;
+    padding-left: 5px;
   }
 
-  & input:not([type="checkbox"]), & textarea {
-   
+  .new-post {
+    width: fit-content;
+    height: fit-content;
+    background-color: #0f0f15;
+    display: flex;
+    gap: 48px;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    color: rgb(35, 60, 206);
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+    }
+
+    & input:not([type="checkbox"]),
+    & textarea {
       text-align: start;
       font-size: 0.9rem;
       height: 60px;
@@ -301,126 +290,83 @@ input[type="checkbox"] {
       &:focus {
         outline: 0px solid rgba(255, 255, 255, 0.208);
       }
-  }
-
-  &__image-or-description-div {
-
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: #0f0f15;
-    gap: 10px;
-
-  button {
-    height: 58px;
-    flex: 1;
-    border-radius: 20px;
-    background-color: #13131a;
-    font-size: 0.9rem;
-    z-index: 2;
-    border: 1px solid rgba(255, 255, 255, 0.135);
-  }
-  }
-
-  &__right {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  &__left {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  &__inputs-div {
-
-    height: fit-content;
-    max-width: 540px;
-    border-radius: 4px;
-    padding-left: 14px;
-    padding-right: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-
-    @media (max-width: 1200px) {
-      max-width: 580px;
     }
-  }
 
-  &__title {
-    font-size: 2rem;
-    font-weight: 680;
-    width: 100%;
-    padding-bottom: 30px;
-  }
+    &__image-or-description-div {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      background-color: #0f0f15;
+      gap: 10px;
 
-  &__label {
-    color: #b0b0b0;
-    font-weight: 400;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 580px;
-  }
+      button {
+        height: 58px;
+        flex: 1;
+        border-radius: 20px;
+        background-color: #13131a;
+        font-size: 0.9rem;
+        z-index: 2;
+        border: 1px solid rgba(255, 255, 255, 0.135);
+      }
+    }
 
-  &__tags-input-div {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    text-align: start;
-    width: 100%;
-    background-color: transparent;
-    border-radius: 5px;
-    color: white;
-    gap: 10px;
+    &__right {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
 
-    input {
+    &__inputs-div {
+      height: fit-content;
+      max-width: 540px;
+      border-radius: 4px;
+      padding-left: 14px;
+      padding-right: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      @media (max-width: 1200px) {
+        max-width: 580px;
+      }
+    }
+
+    &__tags-input-div {
+      display: flex;
+      flex-direction: row;
       flex: 1;
-      width: 30%;
+      text-align: start;
+      width: 100%;
+      background-color: transparent;
+      border-radius: 5px;
+      color: white;
+      gap: 10px;
+
+      input {
+        flex: 1;
+        width: 30%;
+      }
     }
-  }
 
-  &__verify-div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-    color: #666666;
-  }
+    &__publish-button {
+      width: 200px;
+      height: 58px;
+      background-color: transparent;
+      border: 1px solid rgb(95, 95, 95);
+      border-radius: 50px;
+      color: rgb(168, 168, 168);
+      margin-top: 20px;
+    }
 
-  &__verify-button {
-    width: fit-content;
-    padding: 14px;
-    padding-left: 48px;
-    padding-right: 48px;
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.208);
-    color: white;
-  }
+    &__publish-div {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      gap: 30px;
+      color: #666666;
+    }
 
-  &__publish-button {
-    width: 200px;
-    height: 58px;
-    background-color: transparent;
-    border: 1px solid rgb(95, 95, 95);
-    border-radius: 50px;
-    color: rgb(168, 168, 168);
-    margin-top: 20px;
-  }
-
-  &__publish-div {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    gap: 30px;
-    color: #666666;
-  }
-
-/*
+    /*
 &__agreement {
   display: flex;
   align-items: center;
@@ -447,43 +393,30 @@ input[type="checkbox"] {
   }
 }*/
 
-  &__article {
-    border: 1px solid rgba(255, 255, 255, 0.208);
-    width: 100%;
-    gap: 10px;
-    height: fit-content;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 5px;
+    &__long-input {
+      width: 100%;
+
+      &:focus {
+        outline: 0px solid rgba(255, 255, 255, 0.208);
+      }
+    }
   }
 
-  &__long-input {
-    width: 100%;
-    
+  textarea {
+    field-sizing: content;
+    min-height: 60px;
+    background-color: #0f0f15;
+    border: 0px;
+    resize: none;
+    padding: 14px;
+    padding-top: 18px;
+    border-radius: 4px;
+    font-size: 1rem;
+
     &:focus {
       outline: 0px solid rgba(255, 255, 255, 0.208);
     }
   }
-}
-
-textarea {
-  field-sizing: content;
-  min-height: 60px;
-  background-color: #0f0f15;
-  border: 0px;
-  resize: none;
-  padding: 14px;
-  padding-top: 18px;
-  border-radius: 4px;
-  font-size: 1rem;
-
-  &:focus {
-    outline: 0px solid rgba(255, 255, 255, 0.208);
-  }
-}
 
   .post {
     width: 580px;
@@ -498,10 +431,6 @@ textarea {
     box-sizing: border-box;
     border-radius: 4px;
     max-width: 580px;
-
-    &--last {
-      border-bottom: 0;
-    }
 
     &__profile {
       border: 1px solid rgba(255, 255, 255, 0.201);
@@ -562,17 +491,6 @@ textarea {
       }
     }
 
-    &__title {
-      width: 100%;
-      margin-bottom: 5px;
-      height: fit-content;
-      max-height: 80px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      line-height: 1.3em;
-      letter-spacing: 0.02em;
-    }
-
     &__description,
     &__description-div {
       width: 100%;
@@ -589,7 +507,7 @@ textarea {
       width: 100%;
       border: 1px solid rgba(255, 255, 255, 0.253);
       max-height: 500px;
-      object-fit: cover; 
+      object-fit: cover;
       object-position: center;
     }
 

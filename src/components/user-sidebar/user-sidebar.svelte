@@ -10,7 +10,10 @@
 </script>
 
 <div class="user-sidebar">
-  <ProfileBox open_create_post={() => on_open_overlay("CreatePost")} open_plans_options={() => on_open_overlay("PlansOptions")}/>
+  <ProfileBox
+    open_create_post={() => on_open_overlay("CreatePost")}
+    open_plans_options={() => on_open_overlay("PlansOptions")}
+  />
 
   <div>
     <button
@@ -94,6 +97,34 @@
     gap: 8px;
     box-sizing: border-box;
   }
+
+
+
+  @media (max-width: 1240px) {
+    .user-sidebar  {
+      width: 260px;
+    }
+  }
+  @media (max-width: 1100px) {
+    .user-sidebar  {
+      width: 300px;
+    }
+  }
+  @media (max-width: 900px) {
+    .user-sidebar  {
+      width: 260px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+
+    .user-sidebar {
+      display: none;
+    }
+
+  }
+
+  
   .user-sidebar__button {
     height: 52px;
     width: 100%;
