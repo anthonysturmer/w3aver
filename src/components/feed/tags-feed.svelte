@@ -38,6 +38,7 @@
   >
     <path d="m15 18-6-6 6-6" />
   </svg>
+
   <h2 style="font-size: 16px;">{tag}</h2>
 </button>
 
@@ -55,65 +56,138 @@
 
 <style>
   .search-feed {
-    width: calc(100% - 20px);
+    width: 98%;
     max-width: 600px;
+
     margin-left: auto;
     margin-right: auto;
+
     margin-top: 5px;
     margin-bottom: 11px;
+
     padding-top: 50px;
+
     display: flex;
     flex-direction: column;
+
     z-index: 101;
+
     position: relative;
+
     border: 1px solid rgba(255, 255, 255, 0.208);
     border-radius: 5px;
-    anchor-name: --profile-archor;
+
+    box-sizing: border-box;
+
+    anchor-name: --tags-feed-anchor;
   }
 
   .profile-top {
-    width: calc(100vw - 20px);
-    max-width: 600px;
+    position: fixed;
+
+    position-anchor: --tags-feed-anchor;
+
+    left: anchor(left);
+    right: anchor(right);
+
     top: 10px;
-    position-anchor: --profile-archor;
+
     height: 46px;
+
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+
     align-items: center;
+
     display: flex;
     flex-direction: row;
+
     gap: 4px;
+
     background-color: #0f0f15;
+
     padding-left: 10px;
     padding-right: 14px;
+
     border: 1px solid rgba(255, 255, 255, 0.208);
+
     color: white;
+
     font-size: 1rem;
+
     cursor: pointer;
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
+
     box-sizing: border-box;
 
     z-index: 103;
+
     & h2 {
       font-size: 0.95rem;
       font-weight: 500;
+
       color: rgb(145, 145, 145);
     }
   }
 
   .profile-top-background {
-    width: calc(100vw - 12px);
-    max-width: 608px;
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 44px;
-    background-color: #0f0f15;
-    z-index: 102;
-    position-anchor: --profile-archor;
+
+    position-anchor: --tags-feed-anchor;
+
+    left: anchor(left);
+    right: anchor(right);
+
     top: 0;
+
+    height: 44px;
+
+    background-color: #0f0f15;
+
     box-sizing: border-box;
+
+    z-index: 102;
+  }
+
+  @media (max-width: 1240px) {
+    .search-feed {
+      max-width: 1200px;
+    }
+  }
+
+  @supports not (anchor-name: --tags-feed-anchor) {
+    .profile-top {
+      left: 50%;
+      right: auto;
+
+      width: 98%;
+      max-width: 600px;
+
+      transform: translateX(-50%);
+    }
+
+    .profile-top-background {
+      left: 50%;
+      right: auto;
+
+      width: calc(98% + 8px);
+      max-width: 608px;
+
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .profile-top {
+      top: 52px;
+    }
+
+    .profile-top-background {
+      top: 52px;
+    }
+
+    .search-feed {
+      margin-top: 96px;
+      padding-top: 0px;
+    }
   }
 </style>

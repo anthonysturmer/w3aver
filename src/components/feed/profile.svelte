@@ -93,20 +93,8 @@
     }
   });
 
-  /*
-   * URL base do perfil.
-   *
-   * O profile.json guarda apenas:
-   *
-   * summer-josu.github.io
-   *
-   * enquanto algumas funções trabalham com URL.
-   */
   let profile_url = $derived(profile ? `https://${profile.name}` : "");
 
-  /*
-   * Mesmo estado reativo usado nos posts.
-   */
   let subscribed = $derived(profile ? is_subscribed(profile.name) : false);
 
   let hidden = $derived(profile ? is_hidden(profile_url) : false);
@@ -155,8 +143,6 @@
           alt={profile.name}
         />
 
-        <!-- SUBSCRIBE -->
-
         {#if !hidden}
           <button
             id="subscribe"
@@ -171,8 +157,6 @@
           </button>
         {/if}
 
-        <!-- HIDE -->
-
         {#if !subscribed}
           <button id="block" onclick={handle_hide_profile} class:hidden>
             {#if hidden}
@@ -182,8 +166,6 @@
             {/if}
           </button>
         {/if}
-
-        <!-- DONATE -->
 
         {#if !hidden}
           <button class="donate-button" title="Apoiar">
@@ -204,8 +186,6 @@
             >
           </button>
         {/if}
-
-        <!-- FLAG -->
 
         <button
           id="flag"
@@ -270,11 +250,14 @@
   }
 
   .profile-top {
-    width: calc(100vw - 20px);
-    max-width: 600px;
-    top: 10px;
+    position: fixed;
 
-    position-anchor: --profile-archor;
+    position-anchor: --profile-feed-anchor;
+
+    left: anchor(left);
+    right: anchor(right);
+
+    top: 10px;
 
     height: 46px;
 
@@ -295,19 +278,15 @@
 
     border: 1px solid rgba(255, 255, 255, 0.208);
 
-    cursor: pointer;
-
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
     box-sizing: border-box;
+
+    cursor: pointer;
 
     z-index: 103;
 
     & h2 {
       font-size: 0.95rem;
       font-weight: 500;
-
       color: rgb(145, 145, 145);
     }
 
@@ -317,37 +296,37 @@
   }
 
   .profile-top-background {
-    width: calc(100vw - 12px);
-    max-width: 608px;
-
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
+
+    position-anchor: --profile-feed-anchor;
+
+    left: anchor(left);
+    right: anchor(right);
+
+    top: 0;
 
     height: 44px;
 
-
     background-color: #0f0f15;
 
-    z-index: 102;
-
-    position-anchor: --profile-archor;
-
-    top: 0;
     box-sizing: border-box;
+
+    z-index: 102;
   }
 
   .profile {
-    width: calc(100% - 20px);
+    width: 98%;
     max-width: 600px;
+
     margin-left: auto;
     margin-right: auto;
+
+    margin-top: 52px;
+    margin-bottom: 11px;
 
     height: fit-content;
 
     background-color: rgba(0, 0, 0, 0);
-
-    margin-bottom: 11px;
 
     display: flex;
     flex-direction: column;
@@ -358,9 +337,7 @@
 
     border-radius: 5px;
 
-    anchor-name: --profile-archor;
-
-    margin-top: 52px;
+    anchor-name: --profile-feed-anchor;
 
     &__middle {
       justify-content: center;
@@ -420,10 +397,7 @@
 
       color: rgb(255, 255, 255);
 
-      padding: 4px;
-
-      padding-left: 12px;
-      padding-right: 12px;
+      padding: 4px 12px;
 
       border: 1px solid rgba(255, 255, 255, 0.171);
 
@@ -497,6 +471,49 @@
       }
     }
   }
+
+  @media (max-width: 1240px) {
+    .profile {
+      max-width: 1200px;
+    }
+  }
+
+  @supports not (anchor-name: --profile-feed-anchor) {
+    .profile-top {
+      left: 50%;
+      right: auto;
+
+      width: 98%;
+      max-width: 600px;
+
+      transform: translateX(-50%);
+    }
+
+    .profile-top-background {
+      left: 50%;
+      right: auto;
+
+      width: calc(98% + 8px);
+      max-width: 608px;
+
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .profile-top {
+      top: 52px;
+    }
+
+    .profile-top-background {
+      top: 52px;
+    }
+
+    .profile {
+      margin-top: 95px;
+    }
+  }
+
   @media (max-width: 480px) {
     .profile {
       &__middle {
