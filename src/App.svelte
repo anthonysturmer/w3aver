@@ -15,6 +15,7 @@
   import Profile from "./components/feed/profile.svelte";
   import PlansOptions from "./components/overlay/plans-options.svelte";
   import MobileTopBar from "./components/mobile-top-bar.svelte";
+  import IframeTopBar from "./components/iframe-top-bar.svelte";
 
   import { iframe_url } from "./global/iframe.svelte";
 
@@ -188,47 +189,9 @@
 <div class="app" class:app--feed-overlay={feed_overlay_open}>
   {#if iframe_url.url}
     <div class="iframe__container">
-      <section class="iframe__top-bar" aria-label="Controles do visualizador">
-        <img
-          loading="lazy"
-          class="iframe__icon"
-          src="https://anthonysturmer.github.io/anthonysturmer/w3aver.png"
-          alt="w3aver"
-        />
+      
+      <IframeTopBar on_close_modal={() => (iframe_url.url = "")}/>
 
-        <a
-          class="iframe__external-link"
-          href={iframe_url.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Abrir site em uma nova aba"
-        >
-          abrir site
-        </a>
-
-        <button
-          class="iframe__button"
-          onclick={() => (iframe_url.url = "")}
-          aria-label="Fechar visualizador"
-          title="Fechar visualizador"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M9 14 4 9l5-5" />
-            <path
-              d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"
-            />
-          </svg>
-        </button>
-      </section>
 
       <iframe src={iframe_url.url} title="Site aberto pelo W3aver"></iframe>
     </div>
@@ -240,7 +203,7 @@
 
   </div>
 
-  <MobileTopBar on_open_overlay={open_modal}/>
+  <MobileTopBar on_open_overlay={open_modal} on_close_modal={() => (iframe_url.url = "")}/>
 
   <main
     class="feed-stack"
@@ -447,15 +410,14 @@
     z-index: 4;
   }
 
-  .iframe__container {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000000000;
-    display: flex;
-    flex-direction: column;
-    background-color: #0f0f15;
+  @media (max-width: 1100px) {
+
+     .go-back-button { 
+      
+      top: 54px;
+
+    }
+
   }
 
   .iframe__top-bar {
@@ -472,16 +434,27 @@
     z-index: 2;
   }
 
-  iframe {
-    display: block;
-    width: 100%;
-    flex: 1;
-    min-height: 0;
-    border: 0;
-    z-index: 1;
-    background-color: white;
-  }
+.iframe__container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
 
+  display: flex;
+  flex-direction: column;
+
+  background-color: #0f0f15;
+  z-index: 1000000000;
+}
+
+iframe {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  background-color: white;
+}
   .iframe__icon {
     font-size: 2rem;
     text-align: start;

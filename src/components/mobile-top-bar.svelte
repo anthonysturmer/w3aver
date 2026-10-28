@@ -5,10 +5,14 @@
 
   interface user_sidebar_props {
     on_open_overlay: (overlay_name: string) => void;
+    on_close_modal: () => void;
 
   }
 
-  let { on_open_overlay }: user_sidebar_props = $props();
+  let { on_open_overlay, on_close_modal }: user_sidebar_props = $props();
+
+
+
 </script>
 
 <div class="mobile-top-bar">
@@ -22,7 +26,7 @@
         />
 
 
-        <div class="mobile-top-bar__buttons">
+        <div class="mobile-top-bar__buttons" >
 
 
     <button
@@ -184,6 +188,8 @@
     
     .mobile-top-bar {
 
+        z-index: 1000000000000000000000000000;
+
         width: 100%;
         padding-right: 14px;
         display: flex;
@@ -278,6 +284,13 @@
     
   }
     
+  @media (max-width: 480px) { 
 
+    .mobile-top-bar__buttons {
+
+      gap: 3px;
+    }
+
+  }
 
 </style>
