@@ -385,7 +385,7 @@
       overflow-x: auto;
       padding: 2px;
       padding-bottom: 2px;
-      flex-wrap: wrap;
+     
 
       scrollbar-width: none;
 
