@@ -372,18 +372,31 @@
       color: rgb(177, 177, 177);
       letter-spacing: 1px;
       padding-left: 4px;
+      white-space: nowrap;
     }
 
     &__tag-div {
       display: flex;
       flex-direction: row;
       gap: 12px;
-
+      
       margin-left: 18px;
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 2px;
+      padding-bottom: 2px;
+      flex-wrap: wrap;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     &__tag-button {
       background-color: rgba(252, 252, 252, 0);
+      white-space: nowrap;
       padding: 3px 10px;
       border: 0;
       border-radius: 4px;

@@ -9,6 +9,7 @@
   let url_input = $state("");
   let title_input = $state("");
   let image_input = $state("");
+  let video_input = $state("");
   let text_input = $state("");
   let tag_1_input = $state("");
   let tag_2_input = $state("");
@@ -22,22 +23,30 @@
     bookmarked = !bookmarked;
   }
 
-  let image_or_text = $state("image");
+  let image_text_or_video = $state("image");
 
   function use_image() {
-    image_or_text = "image";
+    image_text_or_video = "image";
   }
   function use_text() {
-    image_or_text = "text";
+    image_text_or_video = "text";
   }
 
-  let can_publish = $derived(
+  function use_video() {
+    image_text_or_video = "video";
+  }
+
+let can_publish = $derived(
     url_input.trim() !== "" &&
       title_input.trim() !== "" &&
-      (image_or_text === "image"
+      (image_text_or_video === "image"
         ? image_input.trim() !== ""
-        : text_input.trim() !== ""),
+        : image_text_or_video === "text"
+        ? text_input.trim() !== ""
+        : video_input.trim() !== "")
   );
+
+
 </script>
 
 <section class="new-post">
@@ -59,44 +68,74 @@
     <div class="new-post__image-or-description-div">
       <button
         onclick={use_image}
-        style:color={image_or_text === "text" ? "gray" : undefined}
-        style:background-color={image_or_text === "image"
+        style:color={image_text_or_video === "text" ? "gray" : undefined}
+        style:background-color={image_text_or_video === "image"
           ? "rgb(30, 70, 164)"
           : undefined}
-        style:border={image_or_text === "image"
+        style:border={image_text_or_video === "image"
           ? "1px solid rgb(30, 70, 164)"
           : undefined}
       >
-        Usar uma imagem
+        Imagem
       </button>
 
       <button
         onclick={use_text}
-        style:color={image_or_text === "image" ? "gray" : undefined}
-        style:background-color={image_or_text === "text"
+        style:color={image_text_or_video === "image" ? "gray" : undefined}
+        style:background-color={image_text_or_video === "text"
           ? "rgb(30, 70, 164)"
           : undefined}
-        style:border={image_or_text === "text"
+        style:border={image_text_or_video === "text"
           ? "1px solid rgb(30, 70, 164)"
           : undefined}
       >
-        Usar uma descrição em texto
+        Descrição
       </button>
+
+         
+
+      <button 
+        onclick={use_video}
+        style:color={image_text_or_video !== "video" ? "gray" : undefined}
+        style:background-color={image_text_or_video === "video"
+          ? "rgb(30, 70, 164)"
+          : undefined}
+        style:border={image_text_or_video === "video"
+          ? "1px solid rgb(30, 70, 164)"
+          : undefined}
+      >
+        Vídeo
+      </button>
+
+
+
+
     </div>
 
-    {#if image_or_text === "image"}
+    {#if image_text_or_video === "image"}
       <input
         bind:value={image_input}
         class="new-post__long-input"
         placeholder="Adicione a URL da sua imagem"
       />
-    {:else}
+    {/if}
+
+    
+    {#if image_text_or_video === "text"}
       <textarea
         bind:value={text_input}
         placeholder="Adicione uma descrição para a sua publicação"
         spellcheck="false"
         autocapitalize="none"
         autocomplete="off"></textarea>
+    {/if}
+
+     {#if image_text_or_video === "video"}
+        <input
+        bind:value={video_input}
+        class="new-post__long-input"
+        placeholder="Adicione a URL do seu video"
+      />
     {/if}
 
     <div class="new-post__tags-input-div">
@@ -195,26 +234,36 @@
         {title_input || "Título da sua publicação aqui"}
       </h2>
 
-      {#if image_or_text === "image"}
-        <div transition:slide={{ duration: 250, easing: cubicOut }}>
+      {#if image_text_or_video === "image"}
+        
           <img
             loading="lazy"
-            transition:fade={{ duration: 10 }}
+            
             src={image_input ||
               "https://anthonysturmer.github.io/anthonysturmer/img.jpg"}
             class="post__img"
             alt=""
           />
-        </div>
+        
       {/if}
 
-      {#if image_or_text === "text"}
-        <div class="post__description-div">
+      {#if image_text_or_video === "text"}
+        
           <p class="post__description">
             {text_input ||
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"}
           </p>
-        </div>
+       
+      {/if}
+
+      {#if image_text_or_video === "video"}
+
+      <video 
+          controls 
+          src={video_input || "https://placeholdervideo.dev/640x360"}>
+          Seu navegador não suporta a tag de vídeo.
+        </video>
+
       {/if}
 
       <div class="post__bottom">
@@ -253,6 +302,15 @@
 </section>
 
 <style lang="scss">
+
+  video {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      object-position: center;
+      padding: 0px;
+  }
+
   .title {
     font-size: 2rem;
     padding-bottom: 20px;
@@ -277,20 +335,21 @@
     }
 
     & input:not([type="checkbox"]),
-    & textarea {
-      text-align: start;
-      font-size: 0.9rem;
-      height: 60px;
-      background-color: #13131a;
-      border: 1px solid rgba(255, 255, 255, 0.135);
-      color: white;
-      padding: 14px;
-      border-radius: 24px;
+  & textarea {
+    text-align: start;
+    font-size: 0.9rem;
+    min-height: 60px;
+    background-color: #13131a;
+    border: 1px solid rgba(255, 255, 255, 0.135);
+    color: white;
+    padding: 0 14px;
+    border-radius: 24px;
+    box-sizing: border-box;
 
-      &:focus {
-        outline: 0px solid rgba(255, 255, 255, 0.208);
-      }
+    &:focus {
+      outline: 0;
     }
+  }
 
     &__image-or-description-div {
       display: flex;
@@ -366,32 +425,6 @@
       color: #666666;
     }
 
-    /*
-&__agreement {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.208);
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  background-color: #13131a;
-
-  button {
-
-    padding: 0;
-    border: 0;
-    background: none;
-    color: #5f8ee8;
-    font: inherit;
-    font-size: 0.85rem;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}*/
 
     &__long-input {
       width: 100%;
@@ -403,18 +436,15 @@
   }
 
   textarea {
-    field-sizing: content;
-    min-height: 60px;
-    background-color: #0f0f15;
-    border: 0px;
     resize: none;
-    padding: 14px;
-    padding-top: 18px;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    height: 140px !important;
 
-    &:focus {
-      outline: 0px solid rgba(255, 255, 255, 0.208);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
