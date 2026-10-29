@@ -381,6 +381,7 @@
       gap: 12px;
       
       margin-left: 18px;
+      margin-right: 8px;
       max-width: 100%;
       overflow-x: auto;
       padding: 2px;
