@@ -184,7 +184,7 @@
           "O site aqui disponível busca exemplificar como seria a dinâmica dos posts armazenados localmente. " +
           "Esta não é a versão final e ainda não está conectada a um servidor. " +
           "Por isso, alguns recursos ainda não estão implementados ou podem funcionar de forma inesperada.\n\n" +
-          "A responsividade para dispositivos móveis ainda está sendo desenvolvida, portanto, utilize um computador para testar o site.",
+          "A responsividade para dispositivos móveis ainda está sendo desenvolvida, portanto, recomendamos que seja utilizado um computador para testar o site.",
       );
 
       localStorage.setItem("ja_visitou", "true");
