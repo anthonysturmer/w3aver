@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { Component } from "svelte";
   import { onMount } from "svelte";
+  import { fly} from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
+
 
   import MainFeed from "./components/feed/main-feed.svelte";
   import TagsFeed from "./components/feed/tags-feed.svelte";
@@ -16,6 +19,7 @@
   import PlansOptions from "./components/overlay/plans-options.svelte";
   import MobileTopBar from "./components/mobile-top-bar.svelte";
   import IframeTopBar from "./components/iframe-top-bar.svelte";
+ 
 
   import { iframe_url } from "./global/iframe.svelte";
 
@@ -44,6 +48,8 @@
   let feed_stack = $state<feed_view_state[]>([
     { id: 0, type: "main", scroll_y: 0 },
   ]);
+
+  let mobile_sidebar = $state(false)
 
   let scroll_lock_active = false;
   let scroll_lock_x = 0;
@@ -184,7 +190,22 @@
       localStorage.setItem("ja_visitou", "true");
     }
   });
+
+
+
 </script>
+
+
+{#if mobile_sidebar}
+<div class="mobile-sidebar-div" transition:fly={{ x: '-100%', duration: 300, easing: cubicOut }}>
+
+  <NavSidebar on_open_overlay={open_modal} on_tag_selected={open_tags_feed} />
+
+</div>
+
+{/if}
+
+
 
 <div class="app" class:app--feed-overlay={feed_overlay_open}>
   {#if iframe_url.url}
@@ -199,11 +220,18 @@
 
 
 
+  
+
+
   <div class="false-sidebar">
 
   </div>
 
-  <MobileTopBar on_open_overlay={open_modal} on_close_modal={() => (iframe_url.url = "")}/>
+  <MobileTopBar 
+  on_open_overlay={open_modal} 
+  mobile_sidebar={mobile_sidebar} 
+  on_open_sidebar={() => mobile_sidebar = !mobile_sidebar} 
+/>
 
   <main
     class="feed-stack"
@@ -257,7 +285,12 @@
     class:container--hidden={Boolean(active_modal) || Boolean(iframe_url.url)}
     
   >
+  <div class="desktop-sidebar-div">
     <NavSidebar on_open_overlay={open_modal} on_tag_selected={open_tags_feed} />
+
+
+  </div>
+
     <UserSidebar on_open_overlay={open_modal} />
   </div>
 
@@ -291,7 +324,44 @@
 </div>
 
 <style lang="scss">
-  #container {
+
+
+
+.mobile-sidebar-div {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 10px;
+  left: 0;
+  width: 280px; 
+  height: calc(100vh - 10px);
+  background-color: #0f0f15; /* Cor de fundo para não ficar transparente */
+  z-index: 1000;
+  border-right: 1px solid rgba(255, 255, 255, 0.208);
+  overflow-y: hidden; /* Permite rolar se o conteúdo for maior que a tela */
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5); /* Opcional: sombra para destacar */
+}
+
+ /* VERIFICAR O WIDTH EXATO 760 OU 761 */
+  @media (min-width: 760px) {
+
+  .mobile-sidebar-div {
+    display: none;
+  }
+
+}
+
+  @media (max-width: 761px) {
+
+  .desktop-sidebar-div {
+    display: none;
+  }
+
+}
+
+
+
+#container {
     width: 100%;
     max-width: 1260px;
     background-color: rgba(0, 0, 0, 0);
@@ -560,3 +630,6 @@ iframe {
 
 
 </style>
+
+
+

@@ -234,13 +234,7 @@
     }
   }
 
-   @media (max-width: 760px) {
-
-    .nav-sidebar {
-      display: none;
-    }
-
-  }
+  
 
 
 
