@@ -484,7 +484,7 @@
 
      .go-back-button { 
       
-      top: 91px;
+      top: 90px;
       
 
       & svg {
