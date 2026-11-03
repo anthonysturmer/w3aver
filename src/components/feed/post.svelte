@@ -127,8 +127,23 @@
           >
             <path d="M20 6 9 17l-5-5"></path>
           </svg>
+
         {:else}
-          inscrever-se
+
+      <svg 
+        width="16" height="16" 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 8v8"></path>
+        <path d="M8 12h8"></path>
+      </svg>
         {/if}
       </button>
     </div>
@@ -161,10 +176,20 @@
     {/if}
   </a>
 
+
+        <div class="post__tag-div desktop">
+      {#each post[5] as tags, index (index)}
+        <button class="post__tag-button">{tags}</button>
+      {/each}
+    </div>
+
   <div class="post__bottom">
     <time class="post__data">{post[6]}</time>
 
-    <div class="post__tag-div">
+
+
+
+      <div class="post__tag-div mobile">
       {#each post[5] as tags, index (index)}
         <button class="post__tag-button">{tags}</button>
       {/each}
@@ -295,7 +320,13 @@
     &__profile-right {
       display: flex;
       flex-direction: row;
-      gap: 12px;
+      gap: 10px;
+      margin-right: 4px;
+
+      & svg path,
+        circle {
+          color: rgb(82, 82, 82);
+        }
     }
 
     &__favicon {
@@ -316,8 +347,8 @@
       align-items: center;
 
       &-svg {
-        width: 16px;
-        margin-right: 2px;
+        width: 14px;
+        margin-right: 4px;
         stroke-width: 2.5px;
       }
     }
@@ -363,7 +394,7 @@
       align-items: center;
       justify-content: space-between;
       padding-bottom: 2px;
-      padding-top: 10px;
+     /* padding-top: 10px;*/
       font-size: 0.9rem;
     }
 
@@ -380,7 +411,7 @@
       flex-direction: row;
       gap: 12px;
       
-      margin-left: 18px;
+     
       margin-right: 14px;
       max-width: 100%;
       overflow-x: auto;
@@ -394,6 +425,28 @@
         display: none;
       }
     }
+
+     &__tag-div.mobile {
+      margin-left: 18px;
+     }
+
+    @media (max-width: 600px) {
+
+      &__tag-div.mobile {
+
+        display: none;
+      }
+
+  }
+
+     @media (min-width: 600px) {
+
+      &__tag-div.desktop {
+
+        display: none;
+      }
+
+  }
 
     &__tag-button {
       background-color: rgba(252, 252, 252, 0);
@@ -511,20 +564,11 @@
       color: gray;
 
       > svg {
-        margin-top: 2px;
-        margin-bottom: -3px;
+        margin-bottom: -2.5px;
         width: 15px;
         height: 15px;
 
-        path,
-        circle {
-          color: rgb(87, 87, 87);
-        }
       }
-    }
-
-    .post__subscribe-svg path {
-      color: rgba(255, 255, 255, 0.208);
     }
   }
 </style>

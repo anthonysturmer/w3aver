@@ -478,21 +478,27 @@
     outline: 0;
     border: 0;
     z-index: 4;
+    
+    & svg path {
+      color: rgb(255, 255, 255);
+    }
   }
 
   @media (max-width: 1100px) {
 
      .go-back-button { 
       
+      top: 54px;
+
+    }
+
+  }
+
+    @media (max-width: 620px) {
+
+    .go-back-button { 
+      
       top: 90px;
-      
-
-      & svg {
-
-        width: 26px;
-        
-      }
-      
 
     }
 
