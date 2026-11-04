@@ -5,6 +5,7 @@
   color: white;
   font-family: "Atkinson Hyperlegible Next", sans-serif;
   overscroll-behavior: none;
+   -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -28,3 +29,4 @@ button {
   justify-content: center;
 
 }
+
