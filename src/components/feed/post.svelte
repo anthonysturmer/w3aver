@@ -50,6 +50,8 @@
     is_last = false,
   }: post_props = $props();
 
+  /*
+
   let bottom_space: HTMLElement;
   let bookmarks_options_div: HTMLElement;
 
@@ -62,7 +64,7 @@
     } else {
       bookmarks_options_div.style.width = "calc(100% - 28px)";
     }
-  }
+  }*/
 
   let dominium = $derived(new URL(post[0]).hostname);
   let bookmarks_options = $state(false);
@@ -177,7 +179,7 @@
   </a>
 
 
-        <div class="post__tag-div desktop">
+    <div class="post__tag-div mobile">
       {#each post[5] as tags, index (index)}
         <button class="post__tag-button">{tags}</button>
       {/each}
@@ -189,18 +191,84 @@
 
 
 
-      <div class="post__tag-div mobile">
+      <div class="post__tag-div desktop">
       {#each post[5] as tags, index (index)}
         <button class="post__tag-button">{tags}</button>
       {/each}
-    </div>
+      </div>
 
-    <div bind:this={bottom_space} class="post__bottom-space"></div>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button 
+      class="post__share-button"
+      onclick={async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: post[2],
+              text: post[4] || 'Confira este post:',
+              url: post[0],
+            });
+          } catch (error) {
+            // Ignora se o usuário apenas cancelou a janela de compartilhamento
+            if (error.name !== 'AbortError') {
+              console.error('Erro ao compartilhar:', error);
+            }
+          }
+        } else {
+          // Fallback para navegadores sem suporte (ex: copia o link)
+          try {
+            await navigator.clipboard.writeText(post[0]);
+            alert('Link copiado para a área de transferência!');
+          } catch (err) {
+            console.error('Erro ao copiar link', err);
+          }
+        }
+      }}
+      aria-label="Compartilhar post"
+      title="Compartilhar post"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+    </button>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div
       class="post__bookmarks_options_div"
       class:open={bookmarks_options}
-      bind:this={bookmarks_options_div}
+      
     >
       {#each bookmarks_colors_state.items as bookmark_color_option, index}
         <button
@@ -236,9 +304,7 @@
       onclick={() => {
         bookmarks_options = !bookmarks_options;
 
-        requestAnimationFrame(() => {
-          compare_widths();
-        });
+
       }}
       class="post__bookmark-button"
       class:active={bookmarked && !bookmarks_options}
@@ -391,12 +457,22 @@
       color: rgba(255, 255, 255, 0.484);
       height: fit-content;
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      
       padding-bottom: 2px;
-     /* padding-top: 10px;*/
       font-size: 0.9rem;
     }
+
+      @media (min-width: 600px) {
+
+      &__bottom {
+
+        padding-top: 10px;
+        
+      }
+
+  }
 
     &__data {
       font-size: 0.8rem;
@@ -407,18 +483,13 @@
     }
 
     &__tag-div {
+
       display: flex;
       flex-direction: row;
       gap: 12px;
-      
-     
-      margin-right: 14px;
       max-width: 100%;
       overflow-x: auto;
       padding: 2px;
-      padding-bottom: 2px;
-     
-
       scrollbar-width: none;
 
       &::-webkit-scrollbar {
@@ -426,22 +497,32 @@
       }
     }
 
-     &__tag-div.mobile {
+     &__tag-div.desktop {
       margin-left: 18px;
+      flex: 1;
+      
+      
+     }
+
+     &__tag-div.mobile  {
+      
+      margin-top: 2px;
+      
      }
 
     @media (max-width: 600px) {
 
-      &__tag-div.mobile {
+      &__tag-div.desktop button{
 
         display: none;
+        
       }
 
   }
 
      @media (min-width: 600px) {
 
-      &__tag-div.desktop {
+      &__tag-div.mobile  {
 
         display: none;
       }
@@ -459,11 +540,6 @@
       cursor: default;
     }
 
-    &__bottom-space {
-      background-color: aqua;
-      min-width: 0;
-      flex: 1;
-    }
 
     &__bookmarks_options_div {
       position: absolute;
@@ -561,7 +637,7 @@
     &__hide-button {
       background-color: transparent;
       border: 0;
-      color: gray;
+     
 
       > svg {
         margin-bottom: -2.5px;
@@ -569,6 +645,24 @@
         height: 15px;
 
       }
+    }
+
+    &__share-button {
+      background: none;
+      border: 0px;
+      margin-right: 18px;
+
+
+      & svg {
+        width: 20px;
+        height: 20px;
+        margin-top: 4px;
+        
+        & circle, line {
+          color: rgb(82, 82, 82);
+        }
+      }
+      
     }
   }
 </style>
