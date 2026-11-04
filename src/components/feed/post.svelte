@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import {
     is_subscribed,
     toggle_subscriptions,
@@ -67,7 +68,7 @@
   }*/
  
 
-  const has_share = typeof navigator !== 'undefined' && !!navigator.share;
+  const has_share =false;
 
 
   let dominium = $derived(new URL(post[0]).hostname);
@@ -76,7 +77,63 @@
   let subscribed = $derived(is_subscribed(dominium));
   let bookmarked = $derived(is_bookmarked(post));
   let hidden = $derived(is_hidden(post[0]));
+
+
+  let toast_message = $state("");
+  let toast_visible = $state(false);
+  let toast_leaving = $state(false);
+  let toast_key = $state(0);
+  let toast_timeout: ReturnType<typeof setTimeout> | undefined;
+  let toast_remove_timeout: ReturnType<typeof setTimeout> | undefined;
+  let toast_component_destroyed = false;
+
+  function show_toast(message: string): void {
+    if (toast_component_destroyed) return;
+
+    // Cancela os dois timers para que uma chamada nova substitua a anterior.
+    if (toast_timeout !== undefined) {
+      clearTimeout(toast_timeout);
+      toast_timeout = undefined;
+    }
+
+    if (toast_remove_timeout !== undefined) {
+      clearTimeout(toast_remove_timeout);
+      toast_remove_timeout = undefined;
+    }
+
+  
+    toast_message = message;
+    toast_leaving = false;
+    toast_visible = true;
+    toast_key += 1;
+
+    toast_timeout = setTimeout(() => {
+      toast_visible = false;
+      toast_leaving = true;
+      toast_timeout = undefined;
+
+      // Mantém o elemento no DOM até a animação de saída terminar.
+      toast_remove_timeout = setTimeout(() => {
+        toast_message = "";
+        toast_leaving = false;
+        toast_remove_timeout = undefined;
+      }, 230);
+    }, 2500);
+  }
+
+  onDestroy(() => {
+    toast_component_destroyed = true;
+
+    if (toast_timeout !== undefined) {
+      clearTimeout(toast_timeout);
+    }
+
+    if (toast_remove_timeout !== undefined) {
+      clearTimeout(toast_remove_timeout);
+    }
+  });
 </script>
+
 
 <article
   class="post {is_last ? 'post--last' : ''}"
@@ -218,24 +275,44 @@
 
 
 
+  <div class="post__share-container">
+    {#key toast_key}
+      {#if toast_message}
+        <div
+          class="toast"
+          class:visible={toast_visible}
+          class:leaving={toast_leaving}
+          
+          role="status"
+          aria-live="polite"
+        >
+          {toast_message}
+        </div>
+      {/if}
+    {/key}
+
   <button 
     class="post__share-button"
     onclick={async () => {
-      if (has_share) {
+      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
         try {
           await navigator.share({
             title: post[2],
-            text: post[4] || 'Confira este post:',
+            text: post[4] || "Confira este post:",
             url: post[0],
           });
-        } catch (error) {
-          if (error.name !== 'AbortError') console.error(error);
+        } catch (error: unknown) {
+          const was_cancelled =
+            error instanceof DOMException && error.name === "AbortError";
+
+          if (!was_cancelled) console.error(error);
         }
       } else {
         try {
+         
           await navigator.clipboard.writeText(post[0]);
-          alert('Link copiado para a área de transferência!');
-        } catch (err) {
+          show_toast('Link copiado!');
+        } catch (err: unknown) {
           console.error('Erro ao copiar', err);
         }
       }
@@ -248,13 +325,11 @@
 
       {:else}
 
-    
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link preview-icon"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-
-
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-2 preview-icon"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
       {/if}
     
     </button>
+  </div>
 
 
 
@@ -660,7 +735,7 @@
     &__share-button {
       background: none;
       border: 0px;
-      margin-right: 10px;
+      margin-right: 12px;
 
 
       & svg {
@@ -668,11 +743,112 @@
         height: 20px;
         margin-top: 4px;
         
-        & circle, line, path {
+        & circle, line, path, rect {
           color: rgb(82, 82, 82);
         }
       }
       
+    }
+  }
+
+  .post__share-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .toast {
+    position: absolute;
+    right: 5px;
+    bottom: calc(100% + 9px);
+    padding: 9px 13px;
+    background: #2d2d3c;
+    color: white;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(0, 8px, 0) scale(0.94);
+    transform-origin: bottom right;
+    filter: blur(1px);
+    transition:
+      opacity 190ms ease,
+      transform 230ms cubic-bezier(0.4, 0, 0.2, 1),
+      filter 190ms ease,
+      visibility 0s linear 230ms;
+    will-change: opacity, transform;
+    z-index: 10;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 100%;
+      border: 6px solid transparent;
+      border-top-color: #2d2d3c;
+    }
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+      transition-delay: 0s;
+      animation: toast-enter 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    &.leaving {
+      visibility: visible;
+      animation: toast-exit 220ms cubic-bezier(0.4, 0, 1, 1) both;
+    }
+  }
+
+  @keyframes toast-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0) scale(0.9);
+      filter: blur(2px);
+    }
+
+    70% {
+      opacity: 1;
+      transform: translate3d(0, -2px, 0) scale(1.025);
+      filter: blur(0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes toast-exit {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(0, 7px, 0) scale(0.96);
+      filter: blur(1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast,
+    .toast.visible,
+    .toast.leaving {
+      animation: none;
+      transition: none;
+      filter: none;
+      transform: none;
     }
   }
 </style>
