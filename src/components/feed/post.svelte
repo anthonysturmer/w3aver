@@ -65,6 +65,10 @@
       bookmarks_options_div.style.width = "calc(100% - 28px)";
     }
   }*/
+ 
+
+  const has_share = typeof navigator !== 'undefined' && !!navigator.share;
+
 
   let dominium = $derived(new URL(post[0]).hostname);
   let bookmarks_options = $state(false);
@@ -214,40 +218,46 @@
 
 
 
-<button 
-      class="post__share-button"
-      onclick={async () => {
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title: post[2],
-              text: post[4] || 'Confira este post:',
-              url: post[0],
-            });
-          } catch (error) {
-            // Ignora se o usuário apenas cancelou a janela de compartilhamento
-            if (error.name !== 'AbortError') {
-              console.error('Erro ao compartilhar:', error);
-            }
-          }
-        } else {
-          // Fallback para navegadores sem suporte (ex: copia o link)
-          try {
-            await navigator.clipboard.writeText(post[0]);
-            alert('Link copiado para a área de transferência!');
-          } catch (err) {
-            console.error('Erro ao copiar link', err);
-          }
+  <button 
+    class="post__share-button"
+    onclick={async () => {
+      if (has_share) {
+        try {
+          await navigator.share({
+            title: post[2],
+            text: post[4] || 'Confira este post:',
+            url: post[0],
+          });
+        } catch (error) {
+          if (error.name !== 'AbortError') console.error(error);
         }
-      }}
-      aria-label="Compartilhar post"
-      title="Compartilhar post"
-    >
+      } else {
+        try {
+          await navigator.clipboard.writeText(post[0]);
+          alert('Link copiado para a área de transferência!');
+        } catch (err) {
+          console.error('Erro ao copiar', err);
+        }
+      }
+    }}
+  >
+
+      {#if has_share}
+
       <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+
+      {:else}
+
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link preview-icon"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+
+      {/if}
+    
     </button>
 
 
-    
+
 
 
 
@@ -650,7 +660,7 @@
     &__share-button {
       background: none;
       border: 0px;
-      margin-right: 18px;
+      margin-right: 10px;
 
 
       & svg {
@@ -658,7 +668,7 @@
         height: 20px;
         margin-top: 4px;
         
-        & circle, line {
+        & circle, line, path {
           color: rgb(82, 82, 82);
         }
       }
