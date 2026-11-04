@@ -51,22 +51,6 @@
     is_last = false,
   }: post_props = $props();
 
-  /*
-
-  let bottom_space: HTMLElement;
-  let bookmarks_options_div: HTMLElement;
-
-  function compare_widths() {
-    const available_width = bottom_space.getBoundingClientRect().width;
-    const bookmarks_width = bookmarks_options_div.scrollWidth;
-
-    if (bookmarks_width <= available_width) {
-      bookmarks_options_div.style.width = "fit-content";
-    } else {
-      bookmarks_options_div.style.width = "calc(100% - 28px)";
-    }
-  }*/
- 
 
   const has_share = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
@@ -294,7 +278,7 @@
   <button 
     class="post__share-button"
     onclick={async () => {
-      if (false) {
+      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
         try {
           await navigator.share({
             title: post[2],
@@ -762,7 +746,7 @@
     right: 5px;
     bottom: calc(100% + 9px);
     padding: 9px 13px;
-    background: #2d2d3c;
+    background: #252532;
     color: white;
     border-radius: 8px;
     font-size: 13px;
@@ -789,7 +773,7 @@
       right: 10px;
       top: 100%;
       border: 6px solid transparent;
-      border-top-color: #2d2d3c;
+      border-top-color: #252532;
     }
 
     &.visible {
