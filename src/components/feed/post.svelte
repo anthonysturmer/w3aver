@@ -68,7 +68,7 @@
   }*/
  
 
-  const has_share =false;
+  const has_share = typeof navigator !== "undefined" && typeof navigator.share === "function";
 
 
   let dominium = $derived(new URL(post[0]).hostname);
@@ -294,7 +294,7 @@
   <button 
     class="post__share-button"
     onclick={async () => {
-      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      if (false) {
         try {
           await navigator.share({
             title: post[2],
